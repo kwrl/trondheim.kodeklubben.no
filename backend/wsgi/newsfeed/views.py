@@ -5,7 +5,7 @@ from models import NewsItem
 
 def get_news_headers(request):
     newsitems = NewsItem.objects.all()
-    data = ser.serialize('json', newsitems, fields=('id','title','time_stamp'))
+    data = ser.serialize('json', newsitems, fields=('id','title','time_stamp','intro'))
     return HttpResponse(data)
 
 def get_news(request, news_id):
