@@ -1,19 +1,22 @@
 from django.http import HttpResponse
-from django.contrib import auth
+from django.contrib.auth import authenticate, login
 
 def register(request):
     pass
 
 def login(request):
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-    user = auth.authenticate(username=username, password=password)
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
     
-    if user is not None and user.is_active:
-        auth.login(request, user)
-        return HttpResponse("OK")
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponse("LOGGED IN")
+        else:
+            return HttpResponse("USER NOT ACTIVE")
     else:
-        return HttpResponse("ERROR")
+        return HttpResponse("NO SUCH USER")
 
 def logout(request):
     auth.logout(request)

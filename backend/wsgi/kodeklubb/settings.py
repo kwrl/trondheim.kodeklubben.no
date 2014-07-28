@@ -26,7 +26,18 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#django-cors-headers
 CORS_ORIGIN_ALLOW_ALL = True 
+
+#djang-rest
+REST_FRAMEWORK = {
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 
 # Application definition
 
@@ -40,6 +51,7 @@ INSTALLED_APPS = (
     'newsfeed',
     'courses',
     'corsheaders',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
