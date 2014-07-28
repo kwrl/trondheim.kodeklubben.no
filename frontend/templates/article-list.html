@@ -1,7 +1,7 @@
 <ul ng-controller="ArticleCtrl as articleCtrl" class="list-group">
     <li ng-repeat="article in articleCtrl.articles" class="article list-group-item" ng-click="articleCtrl.get_full(article)">
-        <h4 class="text-primary">{{article.title}}</h4>
-        <p>{{article.intro}}</p>
-        <p ng-hide="article.hide">{{article.body}}</p>
+        <h4 class="text-primary">{{article.fields.title}}</h4>
+        <p>{{article.fields.intro}}</p>
+        <p ng-hide="article.hide">{{article.fields.body}}</p>
     </li>
 </ul>

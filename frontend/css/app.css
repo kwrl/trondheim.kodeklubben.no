@@ -1,5 +1,12 @@
 .article:hover {
-    border-left: 1px solid #DF691A;
-    border-right: 1px solid #DF691A;
+    border-color: #ad1d28;
 }
 
+.well:hover {
+    border-color: #ad1d28;
+}
+
+#site-header {
+	padding-top: 20px;
+	padding-left:20px;
+}

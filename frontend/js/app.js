@@ -1,7 +1,6 @@
 (function() {
 
     var app = angular.module('kodeklubb', []);
-
     app.controller('UserController', ['$http', function($http){
         this.credentials = {email:"",password:""};
         var ref = this;
@@ -34,20 +33,20 @@
         this.get_headers = function() {
             $http.get("http://kwrl.co.uk:8000/news/get_news_headers/").success(function(data){
             //$http.get("/kodeklubb/json/article_headers.json").success(function(data){
-                ref.articles = data.fields; 
+                ref.articles = data; 
             }).error(function(data){
             });
         };
 
         this.get_full = function(article){
-            if(article.body){
+            if(article.fields.body){
                 article.hide = !article.hide; 
             } else {
-                $http.get("kwrl.co.uk:8000/news/get_news/"+article.id).success(function(data){
+                $http.get("http://kwrl.co.uk:8000/news/get_news/"+article.pk).success(function(data){
                 //$http.get("/kodeklubb/json/"+article.id+"/article.json").success(function(data){
                     for(var i=0;i<ref.articles.length;i++){
-                        if (ref.articles[i].id==article.pk){
-                            ref.articles[i] = data.fields;
+                        if (ref.articles[i].pk==article.pk){
+                            ref.articles[i] = data[0];
                         }
                     }
                 });
