@@ -1,26 +1,20 @@
-from django.http import HttpResponse
-from django.core import serializers as ser
-from django.contrib.auth.decorators import login_required
+from rest_framework import status, viewsets, permissions
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from datetime import datetime
-from models import Course, Registration
 
-#Gets all course headers that have yet to close registration
-def get_course_headers(request):
-    courses = Course.objects.filter(registration_end__gt=datetime..now())
-    data = ser.serialize('json', courses, fields='id','name')
-    return HttpResponse(data)
-    
-def get_course(request, course_id):
-    course = Course.objects.get(pk=course_id)
-    data = ser.serialize('json', [course])
-    return HttpResponse(data)
+from .serializers import CourseHeaderSerializer, CourseFullSerializer 
+from .models import Course, Registration
 
-@login_required
-def register_course(request, course_id):
-    course  = Course.objects.get(pk=course_id)
-    pass
+class CourseView(viewsets.ViewSet):
+    queryset = Course.objects.filter(registration_end__gt=datetime.now())
 
-@login_required
-def deregister_course(request, course_id):
-    course  = Course.objects.get(pk=course_id)
-    pass
+    def list(self, request):
+        serializer = CourseHeaderSerializer(self.queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request,pk=None):
+        course = get_object_or_404(self.queryset, pk=pk)
+        serializer = CourseFullSerializer(course)
+        return Response(serializer.data)
+

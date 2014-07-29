@@ -11,7 +11,7 @@ from .serializers import UserSerializer
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     model = User
-
+    
     def get_permissions(self):
         return (AllowAny() if self.request.method == 'POST'
                 else IsStaffOrTargetUser()),
