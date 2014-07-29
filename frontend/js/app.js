@@ -21,7 +21,7 @@
     app.directive('loginForm', function(){
         return {
             restrict:'E',
-        templateUrl:'templates/login-form.html',
+            templateUrl:'templates/login-form.html',
         };
     });
 
@@ -46,7 +46,7 @@
                 //$http.get("/kodeklubb/json/"+article.id+"/article.json").success(function(data){
                     for(var i=0;i<ref.articles.length;i++){
                         if (ref.articles[i].pk==article.pk){
-                            ref.articles[i] = data[0];
+                            ref.articles[i] = data;
                         }
                     }
                 });
