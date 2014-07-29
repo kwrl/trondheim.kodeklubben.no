@@ -39,7 +39,7 @@
         };
 
         this.get_full = function(article){
-            if(article.fields.body){
+            if(article.body){
                 article.hide = !article.hide; 
             } else {
                 $http.get("http://kwrl.co.uk:8000/news/"+article.pk).success(function(data){
