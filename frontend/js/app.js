@@ -31,7 +31,7 @@
         var ref         = this;
 
         this.get_headers = function() {
-            $http.get("http://kwrl.co.uk:8000/news/get_news_headers/").success(function(data){
+            $http.get("http://kwrl.co.uk:8000/news/").success(function(data){
             //$http.get("/kodeklubb/json/article_headers.json").success(function(data){
                 ref.articles = data; 
             }).error(function(data){
@@ -42,7 +42,7 @@
             if(article.fields.body){
                 article.hide = !article.hide; 
             } else {
-                $http.get("http://kwrl.co.uk:8000/news/get_news/"+article.pk).success(function(data){
+                $http.get("http://kwrl.co.uk:8000/news/"+article.pk).success(function(data){
                 //$http.get("/kodeklubb/json/"+article.id+"/article.json").success(function(data){
                     for(var i=0;i<ref.articles.length;i++){
                         if (ref.articles[i].pk==article.pk){
