@@ -18,7 +18,7 @@ class CourseHeaderSerializer(serializers.Serializer):
         return instance
 
 
-class CourseFullSerializer(serializers.ModelSerializer):
+class CourseFullSerializer(serializers.Serializer):
     pk      = serializers.Field()
     name    = serializers.CharField()
     desc    = serializers.CharField()

@@ -6,15 +6,18 @@ from django.contrib import admin
 from rest_framework import viewsets, routers
 
 from newsfeed.views import NewsView
-from usermanagement.views import UserView
-from courses.views import CourseView
+from usermanagement.views import UserView, login, logout
+from courses.views import CourseView, FullCourseView
 
 admin.autodiscover()
 
 router = routers.DefaultRouter()
 router.register(r'news',NewsView, base_name='news')
 router.register(r'courses',CourseView, base_name='courses')
-router.register('accounts', UserView)
+router.register(r'courses_full', FullCourseView, base_name='courses_full')
+router.register(r'users', UserView, base_name='users')
+#router.register(login)
+#router.register(logout)
 
 urlpatterns = patterns('',
    url(r'^', include(router.urls)),
