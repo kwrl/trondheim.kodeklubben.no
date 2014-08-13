@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'grappelli',
     'filebrowser',
     'bootstrapform',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
