@@ -20,23 +20,20 @@ class UserView(viewsets.ViewSet):
     def get_permissions(self):
         return (AllowAny() if self.request.method == 'POST'
                 else IsStaffOrTargetUser()),
+    @action(["GET","POST"])
+    def login(request):
+        username = request.POST['username']
+        password = request.POST['password']
 
+        user = authenticate(username=username,password=password)
+        if user is not None:
+            if user.is_active:
+                login(request,user)
+                return Response({'status':'Logged in'})
+            return Response({'status':'User not active'})
+        return Response({'status':'Incorrect credentials'})
 
-
-@api_view(['POST'])
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-
-    user = authenticate(username=username,password=password)
-    if user is not None:
-        if user.is_active:
-            login(request,user)
-            return Response({'status':'Logged in'})
-        return Response({'status':'User not active'})
-    return Response({'status':'Incorrect credentials'})
-
-@api_view(['POST'])
-def logout(request):
-    logout(request)
-    return Response({'status':'User logged out'})
+    @action(["GET","POST"])
+    def logout(request):
+        logout(request)
+        return Response({'status':'User logged out'})

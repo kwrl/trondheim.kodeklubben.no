@@ -23,6 +23,9 @@ SECRET_KEY = 'n!!2rf9=y1k)eyo*^-657oc%ioh_@1@brpi4s&8i=uw6@@l76g'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+TEMPLATE_DIRS = (
+        BASE_DIR + '/kodeklubb/templates/'
+)
 
 ALLOWED_HOSTS = []
 
@@ -55,6 +58,7 @@ INSTALLED_APPS = (
     'tinymce',
     'grappelli',
     'filebrowser',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (
