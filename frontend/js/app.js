@@ -1,22 +1,73 @@
-(function() {
+var config = {
+	backendURL: "http://localhost:8080"
+};
 
-    var app = angular.module('kodeklubb', []);
-    app.controller('UserController', ['$http', function($http){
-        this.credentials = {email:"",password:""};
+(function() {
+    var app = angular.module('kodeklubb', ['ngRoute']);
+
+	app.config(function($routeProvider) {
+		$routeProvider
+			.when('/', {
+				templateUrl : 'pages/frontPage.html',
+				controller  : 'ArticleCtrl'
+			})
+
+			.when('/register', {
+				templateUrl : 'pages/register.html',
+				controller  : 'RegisterCtrl'
+			});
+	});
+
+	app.factory('authService', function($http) {
+		return {
+			doLogin: function(credentials, success, error) {
+				var promise = $http.post([config.backendURL, "api-auth/login/"].join("/"), credentials);
+				promise.success(function(data, status, headers, config) {
+					if(success)
+						success(data);
+				});
+				promise.error(function(data, status, headers, config) {
+					if(error)
+						error(data);
+				});
+			}
+		}
+	});
+
+	app.controller('RegisterCtrl', function($scope) {
+		// dosomething
+
+		$scope.master = {
+			username: "",
+			email: "",
+			password: ""
+		};
+
+		$scope.reset = function() {
+			$scope.user = angular.copy($scope.master);
+			return true;
+		};
+	});
+
+    app.controller('UserController', function($scope, authService){
+        $scope.credentials = {email:"",password:""};
         var ref = this;
 
         this.login = function(){
-            /*
-            var copy = {username:ref.credentials.email, password:ref.credentials.password};
-            alert(copy.username);
-            $http.post("http://kwrl.co.uk:8000/admin/", copy).error(function(res){
-               alert(res); 
-            }).then(function(res){
-                return res.user;
-            });
-            */
-        };
-    }]);
+			console.log("test");
+			console.dir(authService.doLogin($scope.credentials, function(data) {
+				console.log("SUCCESS");
+				console.dir(data);
+			}, function(data) {
+				console.log("ERROR");
+				console.dir(data);
+			}));
+        }
+
+		this.logout = function() {
+		
+		}
+    });
 
     app.directive('loginForm', function(){
         return {
