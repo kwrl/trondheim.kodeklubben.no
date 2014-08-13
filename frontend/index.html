@@ -14,27 +14,16 @@
 <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="navbar navbar-default navbar-fixed-top">
-        <h2 class="nav navbar-nav" id="site-header">Kodeklubben Trondheim</h2>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div  class="col-md-6">
-            <h2>Nyheter</h2>
-            <article-list></article-list>
-        </div>
-        <div  class="col-md-3">
-            <h2>Programmering</h2>
-        </div>
-		<div  class="col-md-3">
-            <h2>Brukere.</h2>
-            <login-form></login-form>
-        </div>		
-    </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.js"></script>
-<script src="js/app.js"></script>
+	<div class="container-fluid">
+		<div class="navbar navbar-default navbar-fixed-top">
+			<a href="#"><h2 class="nav navbar-nav" id="site-header">Kodeklubben Trondheim</h2></a>
+		</div>
+	</div>
+	<div class="container">
+		<div ng-view></div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js"></script>
+	<script src="js/app.js"></script>
 </body>
 </html>
