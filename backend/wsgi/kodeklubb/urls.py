@@ -3,6 +3,9 @@ from django.conf.urls.static import static
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+
 from rest_framework import viewsets, routers
 
 from newsfeed.views import NewsView
@@ -16,12 +19,15 @@ router.register(r'news',NewsView, base_name='news')
 router.register(r'courses',CourseView, base_name='courses')
 router.register(r'courses_full', FullCourseView, base_name='courses_full')
 router.register(r'users', UserView, base_name='users')
-#router.register(login)
-#router.register(logout)
 
 urlpatterns = patterns('',
-   url(r'^', include(router.urls)),
-   url(r'^admin/', include(admin.site.urls)),
-   url(r'tinymce/', include('tinymce.urls')),
-   url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^', include(router.urls)),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'tinymce/', include('tinymce.urls')),
+    url(r'^register/', CreateView.as_view(
+        template_name='register.html',
+        form_class=UserCreationForm,
+        success_url='/')),
+    url(r'accounts/', include('django.contrib.auth.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )
