@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'filebrowser',
     'bootstrapform',
     'registration',
+    #'usermanagement',
 )
 
 MIDDLEWARE_CLASSES = (

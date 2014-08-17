@@ -39,7 +39,12 @@ class CourseView(viewsets.ViewSet):
             Registration.objects.filter(course=course, user=user).delete()
             return Response({'status':'removed registration successfully'})
         
-        return Response({'status':'no such registration'})
+        return Response({'status':'no such registration'}) 
+
+    #@action(methods=['GET'])
+    #def get_granted(self, requert, pk=None):
+    #    registrations = Registration.objects.filter(user=request.user)
+        
 
 
 class FullCourseView(viewsets.ViewSet):
