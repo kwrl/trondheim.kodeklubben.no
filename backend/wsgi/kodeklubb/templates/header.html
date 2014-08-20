@@ -4,17 +4,20 @@
             {% if header %}
             <a class="navbar-brand" href="{% url "home" %}">{{header}}</a>
             {% else %}
-                <a class="navbar-brand" href="{% url "home" %}">Kodeklubben Trondheim</a>
+            <a class="navbar-brand" href="{% url "home" %}">Kodeklubben Trondheim</a>
             {% endif %}
         </div>
+        {% if user.is_authenticated %}
+        <form class="navbar-form navbar-right" method="post" action="{% url "log_out" %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning">Logg ut</button>
+        </form>
+        {% else %}
         <ul class="nav navbar-nav navbar-right">
-            {% if user.is_authenticated %}
-            <li><a href="{% url "log_out" %}">Logg ut</a></li>
-            {% else %}
             <li><a href="{% url "register" %}">Registrer deg</a></li>
             <li><a href="{% url "log_in" %}">Logg inn</a></li>
-            {% endif %}
         </ul>
+        {% endif %}
     </div>
 </nav>
 
