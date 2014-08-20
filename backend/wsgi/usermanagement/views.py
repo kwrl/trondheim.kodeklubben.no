@@ -1,18 +1,59 @@
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+#from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.models import User
-from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
-from rest_framework.decorators import action, api_view
-from rest_framework.response import Response
-from rest_framework.renderers import JSONPRenderer, JSONRenderer
-from rest_framework.serializers import LoginSerializer
-from rest_framework.views import APIView
+#from rest_framework import viewsets
+#from rest_framework.permissions import AllowAny
+#from rest_framework.decorators import action, api_view
+#from rest_framework.response import Response
+#from rest_framework.renderers import JSONPRenderer, JSONRenderer
+#from rest_framework.serializers import LoginSerializer
+#from rest_framework.views import APIView
 
-from .permissions import IsStaffOrTargetUser
-from .serializers import UserSerializer
+from datetime import datetime
+from django.views.generic.edit import CreateView
+from django.shortcuts import redirect
+from .forms import UserCreateForm
+from django.conf import settings
+from django.contrib import auth
+from class_based_auth_views.views import LogoutView
 
+#from .permissions import IsStaffOrTargetUser
+#from .serializers import UserSerializer 
+
+class UserCreateView(CreateView):
+    template_name = "register_screen.html"
+    model = User 
+    form_class = UserCreateForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post_date = datetime.now()
+        form.save()
+        return super(UserCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return "asdasdasda.com"
+
+class LogoutView(LogoutView):
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated():
+            if(settings.LOGOUT_REDIRECT_URL):
+                return redirect(settings.LOGOUT_REDIRECT_URL)
+            else:
+                return redirect(self.get_redirect_url())
+        context = self.get_context_data()
+        return self.render_to_response(context)
+
+    def post(self, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            auth.logout(self.request)
+        if(settings.LOGOUT_REDIRECT_URL):
+            return redirect(settings.LOGOUT_REDIRECT_URL)
+        
+        return redirect(self.get_redirect_url())
+
+"""
 @method_decorator(ensure_csrf_cookie)
 class LoginView(APIView):
     renderer_classes = (JSONPRenderer, JSONRenderer)
@@ -61,3 +102,5 @@ class UserView(viewsets.ViewSet):
     def logout(request):
         logout(request)
         return Response({'status':'User logged out'})
+
+"""

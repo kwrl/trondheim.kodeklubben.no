@@ -1,0 +1,21 @@
+<div class="list-group-item course">
+    <h4 class="text-primary course-name">{{course.name}}</h4>
+    <p class="course-desc">{{course.desc}}</p>
+    <p class="course-taken">{{course.taken}}</p>
+    <p class="course-limit">{{course.registration_limit}}</p>
+    <p class="course-id">{{course.id}}</p>
+    <p class="course-url">{% url "course_register" %}</p>
+    <div class="progress progress-striped">
+        <div class="progress-bar progress-bar-info"></div>
+    </div>
+    {% if user.is_authenticated %}
+        {% if course.signed_up %}
+            <button type="button" class="course-sign-off btn btn-warning">Ikke delta</button>
+        {% else %}
+            <button type="button" class="course-sign-up btn btn-primary">Delta</button>
+        {% endif %}
+    {% else %}
+        <p class="course-msg">Du må logge inn for å melde deg opp.</p>
+    {% endif %}
+</div>
+

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="list-group">
+                {% for course in courses %}
+                {% include "courses/single_course.html" with course=course %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static "courses/js/single_course.js" %}"></script>
+{% endblock %}
