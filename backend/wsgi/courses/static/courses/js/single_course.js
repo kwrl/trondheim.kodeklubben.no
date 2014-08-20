@@ -101,8 +101,8 @@ function delayed_reload(delay) {
 function set_bar() {
     var taken, limit,percentage;
 
-    taken = $(this).find(".course-taken").text();
-    limit = $(this).find(".course-limit").text();
+    taken = parseInt($(this).find(".course-taken").text());
+    limit = parseInt($(this).find(".course-limit").text());
    
     if(taken>limit) {
         percentage = 100;
