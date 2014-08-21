@@ -34,4 +34,5 @@ urlpatterns = patterns('',
     url(r'^register/', UserCreateView.as_view(),name="register"),
     url(r'^courses/', include('courses.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^users/',include('usermanagement.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

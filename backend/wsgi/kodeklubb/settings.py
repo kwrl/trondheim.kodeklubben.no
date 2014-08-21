@@ -22,17 +22,17 @@ LOGOUT_REDIRECT_URL = "/login/"
 SECRET_KEY = 'n!!2rf9=y1k)eyo*^-657oc%ioh_@1@brpi4s&8i=uw6@@l76g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
         BASE_DIR + '/kodeklubb/templates/'
 )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 #django-cors-headers
-CORS_ORIGIN_ALLOW_ALL = True 
+#CORS_ORIGIN_ALLOW_ALL = True 
 
 #djang-rest
 REST_FRAMEWORK = {
@@ -55,8 +55,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'newsfeed',
     'courses',
-    'corsheaders',
-    'rest_framework',
+#    'corsheaders',
+#    'rest_framework',
     'tinymce',
     'grappelli',
     'filebrowser',
