@@ -13,9 +13,10 @@ class Course(models.Model):
 
 
 class Registration(models.Model):
-    granted = models.BooleanField()
     user = models.ForeignKey(User)
     course = models.ForeignKey(Course)
+    granted = models.BooleanField()
+    code_master = models.BooleanField()
 
 def all():
     courses = Course.objects.all()

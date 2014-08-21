@@ -1,4 +1,5 @@
 from rest_framework import status, viewsets, permissions
+from django.http.response import HttpResponse
 from rest_framework.decorators import api_view, action, link
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, render
@@ -27,20 +28,37 @@ def list_courses(request):
 
 @login_required
 def register(request):
-    course_id = request.POST['course_id']
-    user_id = request.user.id
-    sign_up = request.POST['sign_up']==u'1'
+    if request.method!='POST':
+        return HttpResponse("Det er ikke noe spennende her.")
 
-    course = Course.objects.get(pk=course_id)
     #import ipdb
     #ipdb.set_trace()
+    course_id = request.POST['course_id']
+    user_id = request.user.id
+
+    master  = request.POST['sign_up']==u'master'
+    kid     = request.POST['sign_up']==u'kid'
+    off     = request.POST['sign_up']==u'off'
+
+    course = Course.objects.get(pk=course_id)
+
     if not course:
         return
 
-    if sign_up and not Registration.objects.filter(user=request.user, course=course).exists():
-        Registration(user=request.user, course=course, granted=False).save()
-    else:
+    if master:
         Registration.objects.filter(user=request.user, course=course).delete()
+        Registration(user=request.user, course=course, granted=False, code_master=True).save()
+        return
+
+    if kid:
+        Registration.objects.filter(user=request.user, course=course).delete()
+        Registration(user=request.user, course=course, granted=False, code_master=False).save()
+        return
+
+    if off:
+        Registration.objects.filter(user=request.user, course=course).delete()
+
+
 
 class CourseView(viewsets.ViewSet):
     queryset = Course.objects.filter(registration_end__gt=timezone.now()).filter(registration_start__lt=timezone.now())
