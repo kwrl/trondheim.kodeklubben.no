@@ -18,8 +18,23 @@ from django.conf import settings
 from django.contrib import auth
 from class_based_auth_views.views import LogoutView
 
+from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
+
 #from .permissions import IsStaffOrTargetUser
 #from .serializers import UserSerializer 
+
+def login_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = authenticate(username=username,password=password)
+    if user is not None:
+        if user.is_active:
+            login(request,user)
+            return redirect(reverse('home'))
+    
+    return redirect(reverse('log_in'))
 
 class UserCreateView(CreateView):
     template_name = "register_screen.html"
@@ -33,7 +48,7 @@ class UserCreateView(CreateView):
         return super(UserCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return "asdasdasda.com"
+        return reverse('log_in') 
 
 class LogoutView(LogoutView):
     def get(self, *args, **kwargs):
