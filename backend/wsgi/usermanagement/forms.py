@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import ModelForm
 
 class UserCreateForm(UserCreationForm):
     email       = forms.EmailField(required=True)
@@ -36,3 +36,8 @@ class UserAuthenticationForm(AuthenticationForm):
         super(UserAuthenticationForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = "Brukernavn"
         self.fields['password'].label = "Passord"
+
+class UserEditForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name","last_name"]

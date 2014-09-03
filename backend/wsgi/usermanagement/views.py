@@ -13,16 +13,38 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.views.generic.edit import CreateView
 from django.shortcuts import redirect
-from .forms import UserCreateForm
+from .forms import UserCreateForm, UserEditForm
 from django.conf import settings
 from django.contrib import auth
+from django.views.generic import View
 from class_based_auth_views.views import LogoutView
 
 from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 #from .permissions import IsStaffOrTargetUser
 #from .serializers import UserSerializer 
+
+class EditUserView(View):
+    form_class = UserEditForm
+    template_name = 'user_name_screen.html'
+    
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(instance=request.user)
+        return render(request, self.template_name, {'form':form})
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+        return redirect(reverse('home'))
+
 
 def login_view(request):
     username = request.POST['username']
