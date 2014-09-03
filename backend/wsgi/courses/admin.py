@@ -7,6 +7,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('course','user','granted', 'code_master')
+    list_filter = ('course','user','granted','code_master')
 
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Registration, RegistrationAdmin)
