@@ -1,0 +1,10 @@
+{% load bootstrap %}
+<form class="form-horizontal" method="post" action="{% url 'edit_user' %}">
+    {% csrf_token %}
+    {{ form | bootstrap}}
+    <button type="submit" class="btn btn-default">Lagre</button>
+    {% for error in form.errors %}
+    <p>{{error}}</p>
+    {% endfor %}
+</form>
+
