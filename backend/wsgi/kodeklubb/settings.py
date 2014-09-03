@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     'frontpage',
     'usermanagement',
     'class_based_auth_views',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -9,7 +9,7 @@ from models import NewsItem
 from .serializers import NewsFullSerializer, NewsHeaderSerializer
 
 def list_news(request):
-    news = NewsItem.objects.all()
+    news = NewsItem.objects.all().order_by('time_stamp')
     return render(request, "newsfeed/list.html", news)
 
 class NewsView(viewsets.ViewSet):

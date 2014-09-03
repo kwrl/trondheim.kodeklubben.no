@@ -43,7 +43,8 @@ function prepare_looks() {
     $(".course-limit").hide();
     $(".course-desc").hide();
     $(".course-taken").hide();
-    $(".course-sign-up").hide();
+    $(".course-sign-up-kid").hide();
+    $(".course-sign-up-master").hide();
     $(".course-sign-off").hide();
     $(".course-id").hide();
     $(".course-url").hide();
@@ -64,7 +65,8 @@ function register_handlers() {
 
     $(".course").click(function() {
         $(this).find(".course-desc").toggle();
-        $(this).find(".course-sign-up").toggle();
+        $(this).find(".course-sign-up-kid").toggle();
+        $(this).find(".course-sign-up-master").toggle();
         $(this).find(".course-sign-off").toggle();
         $(this).find(".course-msg").toggle();
     });

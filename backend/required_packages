@@ -6,3 +6,6 @@ django-tinymce
 django-grappelli
 django-filebrowser
 pillow
+django-class-based-auth-views
+django-registration
+django-bootstrap-form
