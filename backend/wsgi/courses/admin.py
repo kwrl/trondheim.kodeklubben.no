@@ -6,7 +6,9 @@ from .models import Course, Registration
 
 def get_course_lists(modeladmin, request, queryset):
     for course in queryset:
-        course.granted_regs = Registration.objects.filter(course=course, granted=True)
+        granted = Registration.objects.filter(course=course, granted=True)
+        course.granted_masters  = granted.filter(code_master=True) 
+        course.granted_kids     = granted.filter(code_master=False)
     return render(request, 'courses/course_list.html', {'courses':queryset})
 
 get_course_lists.short_description = "Get course lists"
