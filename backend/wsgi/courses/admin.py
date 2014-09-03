@@ -5,5 +5,8 @@ from .models import Course, Registration
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('name','desc')
 
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('course','user','granted')
+
 admin.site.register(Course,CourseAdmin)
-admin.site.register(Registration)
+admin.site.register(Registration, RegistrationAdmin)

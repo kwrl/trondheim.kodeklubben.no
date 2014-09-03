@@ -11,6 +11,9 @@ class Course(models.Model):
 
     registration_limit  = models.PositiveIntegerField() 
 
+    def __str__(self):
+        return self.name
+
 
 class Registration(models.Model):
     user = models.ForeignKey(User)
