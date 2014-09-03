@@ -1,0 +1,6 @@
+{% for course in courses %}
+    Kurs: {{course.name}} <br/>
+    {% for registration in course.granted_regs %}
+    {{registration.user.email}} <br />
+    {% endfor %}
+{% endfor %}
