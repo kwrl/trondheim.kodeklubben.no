@@ -21,10 +21,10 @@ class Registration(models.Model):
     granted = models.BooleanField()
     code_master = models.BooleanField()
 
-def all():
+def get_registered_kids():
     courses = Course.objects.all()
     for course in courses:
-        course.taken = course.registrations.count()
+        course.taken = Registration.objects.filter(course=course,code_master=False)
     return courses
 
 def all_clean():

@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from courses.models import all
+from courses.models import get_registered_kids
 from newsfeed.models import NewsItem
 
 def frontpage(request):
     context = {}
-    courses = all()
+    courses = get_registered_kids()
 
     if(request.user.is_authenticated()):
         for course in courses:
