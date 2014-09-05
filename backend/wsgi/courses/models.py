@@ -24,7 +24,7 @@ class Registration(models.Model):
 def get_registered_kids():
     courses = Course.objects.all()
     for course in courses:
-        course.taken = Registration.objects.filter(course=course,code_master=False)
+        course.taken = Registration.objects.filter(course=course,code_master=False).count()
     return courses
 
 def all_clean():
