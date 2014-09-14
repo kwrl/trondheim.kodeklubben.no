@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from .serializers import CourseHeaderSerializer, CourseFullSerializer 
-from .models import Course, Registration
+from .models import Course, Registration, ScoreProfile, Ranking
 
 def list_courses(request):
     queryset = Course.objects.all()
@@ -26,13 +26,12 @@ def list_courses(request):
 
     return render(request, 'courses/courses.html',context)
 
+
 @login_required
 def register(request):
     if request.method!='POST':
         return HttpResponse("Det er ikke noe spennende her.")
 
-    #import ipdb
-    #ipdb.set_trace()
     course_id = request.POST['course_id']
     user_id = request.user.id
 
@@ -58,64 +57,17 @@ def register(request):
     if off:
         Registration.objects.filter(user=request.user, course=course).delete()
 
+@login_required
+def view_profile(request):
+    profile = ScoreProfile.objects.filter(user=request.user).first()
 
+    if not profile:
+        rank = Ranking.objects.all().order_by("-required_score")[0]
+        profile = ScoreProfile(user=request.user, score=0, current_rank=rank)
+        profile.save()
 
-class CourseView(viewsets.ViewSet):
-    queryset = Course.objects.filter(registration_end__gt=timezone.now()).filter(registration_start__lt=timezone.now())
+    return HttpResponse(profile.current_rank.name)
 
-    def list(self, request):
-        serializer = CourseHeaderSerializer(self.queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request,pk=None):
-        course = get_object_or_404(self.queryset, pk=pk)
-        serializer = CourseFullSerializer(course)
-        return Response(serializer.data)
-
-    @action(methods=['POST'])
-    def register(self, request, pk=None):
-        course  = get_object_or_404(self.get_open_courses(), pk=pk)
-        user    = request.user
-
-        if Registration.objects.filter(course=course, user=user).exists():
-            return Response({'status': 'already registered'})
-
-        Registration(course=course, user=user, granted=False).save()
-        return Response({'status': 'registration successful'})
-
-    @action(methods=['POST'])
-    def unregister(self,request, pk=None):
-        course  = get_object_or_404(self.queryset, pk=pk)
-        user    = request.user
-
-        if Registration.objects.filter(course=course, user=user).exists():
-            Registration.objects.filter(course=course, user=user).delete()
-            return Response({'status':'removed registration successfully'})
-
-        return Response({'status':'no such registration'}) 
-
-    #@action(methods=['GET'])
-    #def get_granted(self, requert, pk=None):
-    #    registrations = Registration.objects.filter(user=request.user)
-
-
-
-class FullCourseView(viewsets.ViewSet):
-    queryset = Course.objects.all()
-
-    def list(self, request):
-        serializer = CourseHeaderSerializer(self.queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request,pk=None):
-        course = get_object_or_404(self.queryset, pk=pk)
-        serializer = CourseFullSerializer(course)
-        return Response(serializer.data)
-
-
-
-
-
-
-
-
+@login_required
+def list_tasks(request):
+    pass
