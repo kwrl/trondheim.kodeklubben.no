@@ -11,18 +11,10 @@ from usermanagement.forms import UserAuthenticationForm
 from rest_framework import viewsets, routers
 
 from newsfeed.views import NewsView
-from courses.views import CourseView, FullCourseView
 from usermanagement.forms import UserCreateForm
 from usermanagement.views import UserCreateView
 
 admin.autodiscover()
-
-router = routers.DefaultRouter()
-router.register(r'api_news',NewsView, base_name='news')
-router.register(r'api_courses',CourseView, base_name='courses')
-router.register(r'api_courses_full', FullCourseView, base_name='courses_full')
-#router.register(r'users', UserView, base_name='users')
-#router.register(r'users', LoginView, base_name='login')
 
 urlpatterns = patterns('',
     #url(r'^', include(router.urls)),

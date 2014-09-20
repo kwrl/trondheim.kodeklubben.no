@@ -9,3 +9,4 @@ pillow
 django-class-based-auth-views
 django-registration
 django-bootstrap-form
+django-cms>=3.0

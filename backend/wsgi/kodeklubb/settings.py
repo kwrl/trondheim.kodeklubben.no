@@ -22,61 +22,78 @@ LOGOUT_REDIRECT_URL = "/login/"
 SECRET_KEY = 'n!!2rf9=y1k)eyo*^-657oc%ioh_@1@brpi4s&8i=uw6@@l76g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True
+
+SITE_ID = 1
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
         BASE_DIR + '/kodeklubb/templates/'
-)
+        )
 
 ALLOWED_HOSTS = ['*']
-
-#django-cors-headers
-#CORS_ORIGIN_ALLOW_ALL = True 
-
-#djang-rest
-REST_FRAMEWORK = {
-    'DEFAULT_MODEL_SERIALIZER_CLASS':
-        'rest_framework.serializers.HyperlinkedModelSerializer',
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        ]
-}
 
 
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'newsfeed',
-    'courses',
-#    'corsheaders',
-#    'rest_framework',
-    'tinymce',
-    'grappelli',
-    'filebrowser',
-    'bootstrapform',
-    'registration',
-    'frontpage',
-    'usermanagement',
-    'class_based_auth_views',
-    'south',
-)
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.sites',
+        'django.contrib.staticfiles',
+        'newsfeed',
+        'courses',
+        'tinymce',
+        'grappelli',
+        'filebrowser',
+        'bootstrapform',
+        'registration',
+        'frontpage',
+        'usermanagement',
+        'class_based_auth_views',
+        'south',
+        'djangocms_file',
+        'djangocms_flash',
+        'djangocms_googlemap',
+        'djangocms_inherit',
+        'djangocms_picture',
+        'djangocms_teaser',
+        'djangocms_video',
+        'djangocms_link',
+        'djangocms_snippet',
+        'djangocms_text_ckeditor',  # note this needs to be above the 'cms' entry
+        'cms',  # django CMS itself
+        'mptt',  # utilities for implementing a modified pre-order traversal tree
+        'menus',  # helper for model independent hierarchical website navigation
+        'south',  # intelligent schema and data migrations
+        'sekizai',  # for javascript and css management
+        'djangocms_admin_style',  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
+        'django.contrib.messages',  # to enable messages framework (see :ref:`Enable messages <enable-messages>`)
+        )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
+        'django.middleware.doc.XViewMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'cms.middleware.user.CurrentUserMiddleware',
+        'cms.middleware.page.CurrentPageMiddleware',
+        'cms.middleware.toolbar.ToolbarMiddleware',
+        'cms.middleware.language.LanguageCookieMiddleware',
+        )
 
 ROOT_URLCONF = 'kodeklubb.urls'
 
@@ -85,16 +102,34 @@ WSGI_APPLICATION = 'kodeklubb.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+        'django.core.context_processors.i18n',
+        'django.core.context_processors.request',
+        'django.core.context_processors.media',
+        'django.core.context_processors.static',
+        'sekizai.context_processors.sekizai',
+        'cms.context_processors.cms_settings',
+)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
+
+
+LANGUAGES = [
+        ('en-us','English')
+]
 
 LANGUAGE_CODE = 'en-us'
 
