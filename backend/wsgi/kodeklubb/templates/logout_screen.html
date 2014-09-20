@@ -1,9 +1,0 @@
-{% extends "threesplitheader.html" %}
-{% load bootstrap %}
-{% block left %}
-<h2 class="text-primary">Vil du logge ut?</h2>
-    <form class="form-horizontal" method="post" action=".">
-        {% csrf_token %}
-        <button class="btn btn-warning" type="submit">Logg ut</botton>
-    </form>
-{% endblock %}
