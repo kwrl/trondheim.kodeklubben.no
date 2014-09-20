@@ -18,14 +18,14 @@
         </ul>
         {% endif %}
         {% if user.is_authenticated %}
-        <form class="navbar-form navbar-right" method="post" action="{% url "log_out" %}">
+        <form class="navbar-form navbar-right" method="post" action="{% url "logout" %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-warning">Logg ut</button>
         </form>
         {% else %}
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url "register" %}">Registrer deg</a></li>
-            <li><a href="{% url "log_in" %}">Logg inn</a></li>
+            <li><a href="{% url "login" %}">Logg inn</a></li>
         </ul>
         {% endif %}
     </div>
