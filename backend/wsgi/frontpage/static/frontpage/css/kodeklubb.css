@@ -1,11 +1,22 @@
 body.kodeklubb
 {
-    //background-color: #242E33;
+    padding-bottom:70px;
 }
 
-.panel-body
-{
-    padding-left:20px;
-    padding-right:20px;
+#header {
+    background-color:black;
 }
 
+#header img {
+    height:50px;
+}
+
+#footer {
+    position:fixed;
+    bottom:0px;
+    right:0px;
+}
+
+#footer img {
+    height:150px;
+}
