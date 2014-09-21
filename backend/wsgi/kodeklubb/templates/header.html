@@ -1,11 +1,8 @@
-<nav class="navbar navbar-default">
+{% load staticfiles %}
+<nav class="navbar navbar-default" style="background-color:black;">
     <div class="container-fluid">
         <div class="navbar-header">
-            {% if header %}
-            <a class="navbar-brand" href="{% url "home" %}">{{header}}</a>
-            {% else %}
-            <a class="navbar-brand" href="{% url "home" %}">Kodeklubben Trondheim</a>
-            {% endif %}
+            <a class="" href="{% url "home" %}"><img src="{% static "frontpage/img/logo.png" %}" style="height:50px"/></a> 
         </div>
         {% if user.is_authenticated %}
         <ul class="nav navbar-nav navbar-left">
