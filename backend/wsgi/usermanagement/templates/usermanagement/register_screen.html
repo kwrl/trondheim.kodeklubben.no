@@ -4,15 +4,13 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h2 class="text-primary">Opprett bruker</h2>
-            <div class="col-sm-4 col-md-4">
-                    {% if not user.is_authenticated %}
-                        {% include "generic_form.html" %}
-                    {% else %}
-                        <p>Du er logget inn, hva skal du her?<p>
-                    {% endif %}
-            </div>
+        <h2 class="text-primary">Opprett bruker</h2>
+        <div class="col-sm-4 col-md-4">
+            {% if not user.is_authenticated %}
+            {% include "generic_form.html" %}
+            {% else %}
+            <p>Du er logget inn, hva skal du her?<p>
+            {% endif %}
         </div>
     </div>
 </div>
