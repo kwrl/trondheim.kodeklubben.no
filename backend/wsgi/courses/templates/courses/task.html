@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block header %}
+    {% include "header.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <h2 class="text-success">{{task.title}}</h2>
+            <div class="well">
+                <p>{{task.desc}}</p>
+                <p>Poeng: {{task.points_reward}}</p>
+                <form class="form" method="post">
+                    {% csrf_token %}
+                    {{form | bootstrap}}
+                    <input type="submit" class="btn btn-success" value="Send inn"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

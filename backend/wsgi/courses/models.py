@@ -39,29 +39,48 @@ def all_clean():
 class Ranking(models.Model):
     name = models.CharField(max_length=30)
     required_score = models.PositiveIntegerField()
+    icon = models.ImageField(upload_to='rank_icons')
+
+def get_start_rank():
+    if Ranking.objects.all().exists():
+        rank = Ranking.objects.order_by('-required_score').first()
+        return rank
+    else:
+        rank = Ranking(name="Apprentice", required_score=0)
+        rank.save()
+        return rank
 
 class ScoreProfile(models.Model):
     user = models.OneToOneField(User)
     current_rank = models.ForeignKey(Ranking)
     score   = models.PositiveIntegerField()
 
+def get_score_profile(user):
+    if ScoreProfile.objects.filter(user=user).exists():
+        return ScoreProfile.objects.filter(user=user).first()
+    else:
+        profile = ScoreProfile(user=user, current_rank=get_start_rank(), score=0)
+        profile.save()
+        return profile
+
 class CompilerProfile(models.Model):
     compile_cmd = models.CharField(max_length=100)
     execute_cmd = models.CharField(max_length=100)
-'''
+
 class TaskSubmission(models.Model):
     task = models.ForeignKey(Task)
     valid = models.BooleanField()
-    content_file = models.FileField()     
+    content_file = models.FileField(upload_to='submissions/')     
+    submitted_by = models.ForeignKey(User)
 
     def execute(self, input=""):
         pass  
-'''
+
 class TestCase(models.Model):
     task = models.ForeignKey(Task)
 
     def is_valid(self, submission):
-        return True
+        return False
 
 '''
 class SimpleTestCase(TestCase):
