@@ -59,7 +59,7 @@ class UserCreateView(CreateView):
         return context
 
     def get_success_url(self):
-        return reverse('log_in') 
+        return reverse('login') 
 
 class UserLoginView(LoginView):
     template_name = "usermanagement/login_screen.html"
