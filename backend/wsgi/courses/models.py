@@ -1,10 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Task(models.Model):
+    title   = models.CharField(max_length=100)
+    desc    = models.CharField(max_length=500)
+    points_reward  = models.PositiveIntegerField()
+
 class Course(models.Model):
     name    = models.CharField(max_length=80)
     desc    = models.CharField(max_length=200)
     registrations = models.ManyToManyField(User, through="Registration")
+    tasks = models.ManyToManyField(Task)
 
     registration_start  = models.DateTimeField()
     registration_end    = models.DateTimeField()
@@ -42,12 +48,6 @@ class ScoreProfile(models.Model):
 class CompilerProfile(models.Model):
     compile_cmd = models.CharField(max_length=100)
     execute_cmd = models.CharField(max_length=100)
-
-class Task(models.Model):
-    title   = models.CharField(max_length=100)
-    desc    = models.CharField(max_length=500)
-    points_reward  = models.PositiveIntegerField()
-
 '''
 class TaskSubmission(models.Model):
     task = models.ForeignKey(Task)

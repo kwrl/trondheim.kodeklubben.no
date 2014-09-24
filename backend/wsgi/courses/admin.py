@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
-from .models import Course, Registration, Ranking, ScoreProfile
+from .models import Course, Registration, Ranking, ScoreProfile, Task
 
 def get_course_lists(modeladmin, request, queryset):
     for course in queryset:
@@ -39,7 +39,7 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('name','desc')
     actions = [get_course_lists, export_as_json]
 
-
+admin.site.register(Task)
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Registration, RegistrationAdmin)
 admin.site.register(Ranking)
