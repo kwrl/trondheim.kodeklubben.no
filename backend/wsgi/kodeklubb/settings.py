@@ -33,6 +33,10 @@ TEMPLATE_DIRS = (
 
 ALLOWED_HOSTS = ['*']
 
+FILE_UPLOAD_HANDLER = (
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+)
 
 # Application definition
 

@@ -38,7 +38,19 @@ class TaskSubmissionView(View):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        pass
+        task = Task.objects.get(pk=self.kwargs['task_id'])
+        sub = TaskSubmission()
+        sub.task = task
+        sub.submitted_by = request.user
+        sub.content_file = request.FILES['content_file']
+        sub.valid = False
+        sub.save()
+
+        context = self.get_context_data()
+        context['form'] = self.form_class()
+        return render(request, self.template_name, context)
+
+        
 
     def get_context_data(self, **kwargs):
         context = {}

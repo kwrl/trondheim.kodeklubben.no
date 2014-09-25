@@ -68,10 +68,22 @@ class CompilerProfile(models.Model):
     execute_cmd = models.CharField(max_length=100)
 
 class TaskSubmission(models.Model):
+    NOT_EVALUATED   = 0
+    QUEUED          = 1
+    RUNNING         = 2
+    EVALUATED       = 3
+    STATES = (
+            (NOT_EVALUATED, 'Ikke vurdert'),
+            (QUEUED, 'Venter'),
+            (RUNNING,'Vurderes'),
+            (EVALUATED, 'Vurdert'),
+    )
+
     task = models.ForeignKey(Task)
     valid = models.BooleanField()
     content_file = models.FileField(upload_to='submissions/')     
     submitted_by = models.ForeignKey(User)
+    status = models.PositiveIntegerField(choices=STATES, default=NOT_EVALUATED)
 
     def execute(self, input=""):
         pass  

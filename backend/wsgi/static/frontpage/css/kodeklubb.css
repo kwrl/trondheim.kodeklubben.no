@@ -1,0 +1,22 @@
+body.kodeklubb
+{
+    padding-bottom:70px;
+}
+
+#header {
+    background-color:black;
+}
+
+#header img {
+    height:50px;
+}
+
+#footer {
+    position:fixed;
+    bottom:0px;
+    right:0px;
+}
+
+#footer img {
+    height:150px;
+}

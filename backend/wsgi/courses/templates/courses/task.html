@@ -12,7 +12,7 @@
             <div class="well">
                 <p>{{task.desc}}</p>
                 <p>Poeng: {{task.points_reward}}</p>
-                <form class="form" method="post">
+                <form class="form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{form | bootstrap}}
                     <input type="submit" class="btn btn-success" value="Send inn"/>
