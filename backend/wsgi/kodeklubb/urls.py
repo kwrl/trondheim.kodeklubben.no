@@ -8,7 +8,6 @@ from filebrowser.sites import site as browsersite
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    #url(r'^', include(router.urls)),
     url(r'^$', include('frontpage.urls')),
     url(r'^admin/filebrowser/', include(browsersite.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
@@ -16,4 +15,4 @@ urlpatterns = patterns('',
     url(r'tinymce/', include('tinymce.urls')),
     url(r'^courses/', include('courses.urls')),
     url(r'^users/',include('usermanagement.urls')),
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
