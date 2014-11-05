@@ -3,7 +3,6 @@ django-cors-headers
 djangorestframework
 markdown
 django-filter
-django-tinymce
 django-grappelli
 django-filebrowser
 pillow
