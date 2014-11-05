@@ -1,3 +1,4 @@
+django==1.6
 django-cors-headers
 djangorestframework
 markdown
@@ -10,4 +11,4 @@ django-class-based-auth-views
 django-registration
 django-bootstrap-form
 django-cms>=3.0
-PIL
+south
