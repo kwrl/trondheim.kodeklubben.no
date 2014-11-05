@@ -50,7 +50,6 @@ INSTALLED_APPS = (
         'django.contrib.staticfiles',
         'newsfeed',
         'courses',
-        'tinymce',
         'grappelli',
         'filebrowser',
         'bootstrapform',

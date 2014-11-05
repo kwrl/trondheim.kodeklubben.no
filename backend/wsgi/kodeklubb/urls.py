@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^admin/filebrowser/', include(browsersite.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'tinymce/', include('tinymce.urls')),
     url(r'^courses/', include('courses.urls')),
     url(r'^users/',include('usermanagement.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
