@@ -10,5 +10,4 @@ django-registration
 django-tinymce
 django-filebrowser
 django-bootstrap-form
-django-cms>=3.0
 south
