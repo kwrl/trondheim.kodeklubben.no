@@ -27,6 +27,7 @@ TEMPLATE_DIRS = (
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
+    'ckeditor',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,6 +71,8 @@ PRIVATE_MEDIA_URL = os.path.join(BASE_DIR, 'private')
 STATIC_URL= '/static/'
 STATIC_ROOT = (os.path.join(BASE_DIR, "static"))
 ADMIN_MEDIA_ROOR=MEDIA_ROOT
+CKEDITOR_UPLOAD_PATH=MEDIA_ROOT
+CKEDITOR_JQUERY_URL='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
