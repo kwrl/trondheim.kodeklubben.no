@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import Sponsor
 
-# Register your models here.
+
+class SponsorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'url')
+    search_fields = ('name', 'url')
+    ordering = ('name',)
+
+admin.site.register(Sponsor, SponsorAdmin)

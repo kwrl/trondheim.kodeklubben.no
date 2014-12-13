@@ -17,6 +17,7 @@ body.kodeklubb
     right:0px;
 }
 
-#footer img {
-    height:150px;
+img {
+    width:100%;
+    height:auto;
 }

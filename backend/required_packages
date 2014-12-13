@@ -4,10 +4,11 @@ djangorestframework
 markdown
 django-filter
 django-grappelli
-django-filebrowser
 pillow
 django-class-based-auth-views
 django-registration
+django-tinymce
+django-filebrowser
 django-bootstrap-form
 django-cms>=3.0
 south

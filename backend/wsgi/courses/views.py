@@ -1,7 +1,4 @@
-from rest_framework import status, viewsets, permissions
 from django.http.response import HttpResponse
-from rest_framework.decorators import api_view, action, link
-from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone

@@ -3,41 +3,47 @@
 {% load staticfiles %}
 
 {% block header %}
-    {% include "header.html" %}
+{% include "header.html" %}
 {% endblock %}
 
 {% block footer %}
-    {% include "footer.html" %}
+{% include "footer.html" %}
 {% endblock %}
 {% block content%}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <h2 class="text-primary">Nyheter</h2>
-            <div class="list-group">
-                {% for newsitem in newsitems %}
-                <div class="list-group-item">
-                    <h4>{{newsitem.title}}</h4>
-                    <p>{{newsitem.intro}}</p>	
-                    <p>{{newsitem.body|safe}}</p>
+        <div class="row">
+                <div class="col-md-2">
+                        {% for sponsor in sponsors %}
+                        <a href="{{sponsor.url}}">
+                                <img src="{{MEDIA_URL}}/{{sponsor.image.path}}"/>
+                        </a>
+                        {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
+                <div class="col-md-4">
+                        <h2 class="text-primary">Nyheter</h2>
+                        <div class="list-group">
+                                {% for newsitem in newsitems %}
+                                <div class="list-group-item">
+                                        <h4>{{newsitem.title}}</h4>
+                                        <p>{{newsitem.intro}}</p>	
+                                        <p>{{newsitem.body|safe}}</p>
+                                </div>
+                                {% endfor %}
+                        </div>
+                </div>
+                <div class="col-md-6">
+                        <h2 class="text-primary">Påmelding</h2>
+                        <div class="list-group col-md-6">
+                                {% for course in courses %}
+                                {% include "courses/single_course.html" with course=course %}
+                                {% if forloop.counter|divisibleby:5 %}
+                        </div>
+                        <div class="list-group col-md-6">
+                                {% endif %}
+                                {% endfor %}
+                        </div>
+                </div>
         </div>
-        <div class="col-md-6">
-            <h2 class="text-primary">Påmelding</h2>
-            <div class="list-group col-md-6">
-                {% for course in courses %}
-                {% include "courses/single_course.html" with course=course %}
-                {% if forloop.counter|divisibleby:5 %}
-                    </div>
-                    <div class="list-group col-md-6">
-                {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 </div>
 <script type="text/javascript" src="{% static "courses/js/single_course.js" %}"></script>
 {% endblock %}
