@@ -12,7 +12,7 @@ def frontpage(request):
         for course in courses:
             course.signed_up = course.registrations.filter(pk=request.user.id).count()
 
-    context['newsitems'] = NewsItem.objects.all().order_by('-time_stamp')
+    context['newsitems'] = NewsItem.objects.all().order_by('-time_stamp')[:5]
     context['courses'] = courses
     context['header'] = "Kodeklubben Trondheim"
     context['sponsors'] = sponsors
