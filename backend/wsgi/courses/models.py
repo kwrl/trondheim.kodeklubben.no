@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone 
+from django.utils import timezone
 
 class Task(models.Model):
     title   = models.CharField(max_length=100)
@@ -16,7 +16,7 @@ class Course(models.Model):
     registration_start  = models.DateTimeField()
     registration_end    = models.DateTimeField()
 
-    registration_limit  = models.PositiveIntegerField() 
+    registration_limit  = models.PositiveIntegerField()
 
     def __str__(self):
         return self.name
@@ -82,12 +82,12 @@ class TaskSubmission(models.Model):
 
     task = models.ForeignKey(Task)
     valid = models.BooleanField()
-    content_file = models.FileField(upload_to='submissions/')     
+    content_file = models.FileField(upload_to='submissions/')
     submitted_by = models.ForeignKey(User)
     status = models.PositiveIntegerField(choices=STATES, default=NOT_EVALUATED)
 
     def execute(self, input=""):
-        pass  
+        pass
 
 class TestCase(models.Model):
     task = models.ForeignKey(Task)
