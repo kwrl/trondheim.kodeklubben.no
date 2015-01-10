@@ -45,6 +45,7 @@ function prepare_looks() {
     $(".course-taken").hide();
     $(".course-sign-up-kid").hide();
     $(".course-sign-up-master").hide();
+    $(".course-sign-up-reserve").hide();
     $(".course-sign-off").hide();
     $(".course-id").hide();
     $(".course-url").hide();
@@ -67,6 +68,7 @@ function register_handlers() {
         $(this).find(".course-desc").toggle();
         $(this).find(".course-sign-up-kid").toggle();
         $(this).find(".course-sign-up-master").toggle();
+        $(this).find(".course-sign-up-reserve").toggle();
         $(this).find(".course-sign-off").toggle();
         $(this).find(".course-msg").toggle();
     });
@@ -77,6 +79,17 @@ function register_handlers() {
         url = $(this).siblings(".course-url").text();
         id  = $(this).siblings(".course-id").text();
         data = {sign_up:'master', course_id: id};
+
+        $.post( url, data );
+        delayed_reload(1000);
+    });
+
+    $(".course-sign-up-reserve").click(function(event){
+        event.stopPropagation();
+        var url, id, data;
+        url = $(this).siblings(".course-url").text();
+        id  = $(this).siblings(".course-id").text();
+        data = {sign_up:'reserve', course_id: id};
 
         $.post( url, data );
         delayed_reload(1000);

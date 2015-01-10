@@ -1,11 +1,9 @@
-from django.http.response import HttpResponse
 from django.shortcuts import render
-from  django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from .models import \
-    Course, Registration, Task, TaskSubmission, get_score_profile
+    Course, Registration, Task, TaskSubmission, ScoreProfile
 from .forms import TaskSubmissionForm
 
 
@@ -18,24 +16,26 @@ class CourseListView(View):
                       self.template_name,
                       {'courses': Course.objects.all()})
 
-
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         pass
 
-@login_required
-def view_profile(request):
-    context = {}
-    profile = get_score_profile(request.user)
-    context['username'] = request.user.username
-    context['rank'] = profile.current_rank
-    context['score'] = profile.score
-    context['courses'] = request.user.course_set.all()
-    context['valid_submissions'] = \
-        TaskSubmission.objects.filter(submitted_by=request.user,
-                                      valid=True).values_list('task', flat=True)
 
-    return render(request, 'courses/profile.html', context)
+class ProfileView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        context = {}
+        profile = ScoreProfile.get_score_profile(request.user)
+        context['username'] = request.user.username
+        context['rank'] = profile.current_rank
+        context['score'] = profile.score
+        context['courses'] = request.user.course_set.all()
+        context['valid_submissions'] = \
+            TaskSubmission.objects.filter(submitted_by=request.user,
+                                          valid=True).values_list('task',
+                                                                  flat=True)
+
+        return render(request, 'courses/profile.html', context)
 
 
 class TaskSubmissionView(View):
@@ -68,53 +68,36 @@ class TaskSubmissionView(View):
         return context
 
 
-def list_courses(request):
-    queryset = Course.objects.all()
+class CourseRegistrationView(View):
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        course_id = request.POST['course_id']
+        course = Course.objects.get(pk=course_id)
 
-    for course in queryset:
-        course.taken = Registration.objects.filter(course=course).count()
+        if course:
+            Registration.objects.filter(user=request.user,
+                                        course=course).delete()
+        else:
+            return
 
-    if(request.user.is_authenticated()):
-        for course in queryset:
-            course.signed_up = \
-                course.registrations.filter(user=request.user).count()
+        if request.POST['sign_up'] == u'master':
+            Registration(user=request.user,
+                         course=course,
+                         granted=False,
+                         code_master=True,
+                         role=Registration.CODE_MASTER).save()
 
-    context = {}
-    context['courses'] = queryset
-    return render(request, 'courses/courses.html', context)
+        elif request.POST['sign_up'] == u'kid':
+            Registration(user=request.user,
+                         course=course,
+                         granted=False,
+                         code_master=False,
+                         role=Registration.KID).save()
 
-
-@login_required
-def register(request):
-    if request.method != 'POST':
-        return HttpResponse("Det er ikke noe spennende her.")
-
-    course_id = request.POST['course_id']
-
-    master = request.POST['sign_up'] == u'master'
-    kid = request.POST['sign_up'] == u'kid'
-    off = request.POST['sign_up'] == u'off'
-
-    course = Course.objects.get(pk=course_id)
-
-    if not course:
+        elif request.POST['sign_up'] == u'reserve':
+            Registration(user=request.user,
+                         course=course,
+                         granted=False,
+                         code_master=False,
+                         role=Registration.RESERVE).save()
         return
-
-    if master:
-        Registration.objects.filter(user=request.user, course=course).delete()
-        Registration(user=request.user,
-                     course=course,
-                     granted=False,
-                     code_master=True).save()
-        return
-
-    if kid:
-        Registration.objects.filter(user=request.user, course=course).delete()
-        Registration(user=request.user,
-                     course=course,
-                     granted=False,
-                     code_master=False).save()
-        return
-
-    if off:
-        Registration.objects.filter(user=request.user, course=course).delete()
