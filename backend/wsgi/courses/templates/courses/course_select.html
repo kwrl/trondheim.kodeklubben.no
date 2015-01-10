@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block header %}
+    {% include "header.html" %}
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static "courses/css/courses.css" %}" >
+{% endblock %}
+
+{% block content %}
+<div class="container">
+{% for course in courses %}
+<div class="jumbotron col-md-12">
+        <h2>{{course.name}}</h2>
+        <p>{{course.desc}}</p>
+        <div class="tasks">
+        {% for task in course.tasks.all %}
+        <div class="alert alert-info row">
+            <div class="col-md-6">
+                <p><a class="alert-link" href="{% url 'submit_to_task' task.id%}">{{task.title}}</a></p>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <p>Poeng: {{task.points_reward}}</p>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+</div>
+<script src="{% static 'courses/js/courses.js' %}"></script>
+{% endblock %}
+
