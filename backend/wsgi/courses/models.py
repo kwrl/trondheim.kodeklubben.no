@@ -12,6 +12,13 @@ class Task(models.Model):
         return self.title
 
 
+    def save(self, *args, **kwargs):
+        super(Task, self).save()
+        profiles = ScoreProfile.objects.all()
+        for profile in profiles:
+            profile.update()
+
+
 class ExtraCourseManager(models.Manager):
     def open_registration(self):
         all_courses = self.all()
@@ -56,13 +63,19 @@ class Registration(models.Model):
     course = models.ForeignKey(Course)
     granted = models.BooleanField()
     code_master = models.BooleanField()
-    role = models.PositiveIntegerField()
+    role = models.PositiveIntegerField(choices=ROLES, default=KID)
 
 
 class Ranking(models.Model):
     name = models.CharField(max_length=30)
     required_score = models.PositiveIntegerField()
     icon = models.ImageField(upload_to='rank_icons')
+
+    def save(self, *args, **kwargs):
+        super(Ranking, self).save()
+        profiles = ScoreProfile.objects.all()
+        for profile in profiles:
+            profile.update()
 
 
 class ScoreProfile(models.Model):
@@ -90,6 +103,16 @@ class ScoreProfile(models.Model):
                                    score=0)
             profile.save()
             return profile
+
+    def update(self):
+        valid_subs = TaskSubmission.objects.filter(submitted_by=self.user,
+                                                   valid=True)
+        completed_tasks = set([x.task for x in valid_subs])
+        self.score = sum([x.points_reward for x in completed_tasks])
+        self.current_rank = Ranking.objects.filter(
+            required_score__lte=self.score).order_by(
+                '-required_score').first()
+        self.save()
 
 
 class CompilerProfile(models.Model):
@@ -120,6 +143,7 @@ class TaskSubmission(models.Model):
 
     def save(self, *args, **kwargs):
         super(TaskSubmission, self).save(*args, **kwargs)
+        ScoreProfile.objects.get(user=self.submitted_by).update()
 
 
 class TestCase(models.Model):
