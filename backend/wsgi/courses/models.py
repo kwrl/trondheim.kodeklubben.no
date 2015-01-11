@@ -17,12 +17,13 @@ class ExtraCourseManager(models.Manager):
         all_courses = self.all()
         return all_courses.filter(registration_start__lt=timezone.now(),
                                   registration_end__gt=timezone.now())
+
     def open_verbose(self):
         courses = self.open_registration()
         for course in courses:
             course.taken = \
                 Registration.objects.filter(course=course,
-                                        code_master=False).count()
+                                            code_master=False).count()
         return courses
 
 
@@ -64,14 +65,13 @@ class Ranking(models.Model):
     icon = models.ImageField(upload_to='rank_icons')
 
 
-
 class ScoreProfile(models.Model):
     user = models.OneToOneField(User)
     current_rank = models.ForeignKey(Ranking)
     score = models.PositiveIntegerField()
 
     @classmethod
-    def get_start_rank():
+    def get_start_rank(cls):
         if Ranking.objects.all().exists():
             rank = Ranking.objects.order_by('-required_score').first()
             return rank
@@ -81,13 +81,13 @@ class ScoreProfile(models.Model):
             return rank
 
     @classmethod
-    def get_score_profile(user):
+    def get_score_profile(cls, user):
         if ScoreProfile.objects.filter(user=user).exists():
             return ScoreProfile.objects.filter(user=user).first()
         else:
             profile = ScoreProfile(user=user,
-                                current_rank=ScoreProfile.get_start_rank(),
-                                score=0)
+                                   current_rank=ScoreProfile.get_start_rank(),
+                                   score=0)
             profile.save()
             return profile
 
@@ -117,6 +117,9 @@ class TaskSubmission(models.Model):
 
     def execute(self, input=""):
         pass
+
+    def save(self, *args, **kwargs):
+        super(TaskSubmission, self).save(*args, **kwargs)
 
 
 class TestCase(models.Model):
