@@ -1,6 +1,5 @@
-from django.conf.urls import patterns, include, url
-from .views import frontpage
+from django.conf.urls import patterns, url
+from .views import FrontpageView
 
 urlpatterns = patterns('',
-        url(r'^', frontpage, name="home"),
-)
+                       url(r'^', FrontpageView.as_view(), name="home"))
