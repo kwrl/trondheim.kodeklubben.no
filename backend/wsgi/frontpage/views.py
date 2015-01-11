@@ -1,21 +1,24 @@
+from django.views.generic import View
 from django.shortcuts import render
-from courses.models import Course
 from newsfeed.models import NewsItem
+from courses.models import Course
 from .models import Sponsor
 
 
-def frontpage(request):
-    context = {}
-    courses = Course.objects.open_verbose()
-    sponsors = Sponsor.objects.all()
+class FrontpageView(View):
+    def get(self, request, *args, **kwargs):
+        context = {}
+        courses = Course.objects.open_verbose()
+        sponsors = Sponsor.objects.all()
 
-    if(request.user.is_authenticated()):
-        for course in courses:
-            course.signed_up = \
-                course.registrations.filter(pk=request.user.id).count()
+        if(request.user.is_authenticated()):
+            for course in courses:
+                course.signed_up = \
+                    course.registrations.filter(pk=request.user.id).count()
 
-    context['newsitems'] = NewsItem.objects.all().order_by('-time_stamp')[:5]
-    context['courses'] = courses
-    context['header'] = "Kodeklubben Trondheim"
-    context['sponsors'] = sponsors
-    return render(request, 'frontpage/frontpage.html', context)
+        context['newsitems'] = \
+            NewsItem.objects.all().order_by('-time_stamp')[:5]
+        context['courses'] = courses
+        context['header'] = "Kodeklubben Trondheim"
+        context['sponsors'] = sponsors
+        return render(request, 'frontpage/frontpage.html', context)

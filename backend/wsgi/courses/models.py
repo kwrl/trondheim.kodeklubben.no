@@ -23,7 +23,7 @@ class ExtraCourseManager(models.Manager):
         for course in courses:
             course.taken = \
                 Registration.objects.filter(course=course,
-                                            code_master=False).count()
+                                            role=0).count()
         return courses
 
 
