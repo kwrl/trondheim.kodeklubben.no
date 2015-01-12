@@ -13,9 +13,9 @@ class CourseListView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         context = {
-            'courses': Course.objects.all(),
+            'courses': request.user.course_set.all(),
             'profile': ScoreProfile.get_score_profile(request.user),
-            'highscore': ScoreProfile.objects.all().order_by('score')[:10]
+            'highscore': ScoreProfile.objects.all().order_by('-score')[:10]
         }
         return render(request,
                       self.template_name,
@@ -55,8 +55,9 @@ class TaskSubmissionView(View):
             submitted_by=request.user,
             task=self.kwargs['task_id']
         )
-        #import ipdb
-        #ipdb.set_trace()
+        context['valid_subs'] = context['subs'].filter(
+            valid=True
+        )
         return render(request, self.template_name, context)
 
     @method_decorator(login_required)
@@ -69,9 +70,7 @@ class TaskSubmissionView(View):
         form = self.form_class(request.POST, request.FILES, instance=sub)
         if form.is_valid():
             form.save()
-        context = self.get_context_data()
-        context['form'] = self.form_class()
-        return render(request, self.template_name, context)
+        return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = {}

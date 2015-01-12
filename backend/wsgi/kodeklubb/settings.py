@@ -64,7 +64,7 @@ WSGI_APPLICATION = 'kodeklubb.wsgi.application'
 #URLS
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = "media"
 MEDIA_URL = '/media/'
 PRIVATE_MEDIA_ROOT = os.path.join(BASE_DIR, 'private')
 PRIVATE_MEDIA_URL = os.path.join(BASE_DIR, 'private')
@@ -73,6 +73,10 @@ STATIC_ROOT = (os.path.join(BASE_DIR, "static"))
 ADMIN_MEDIA_ROOR=MEDIA_ROOT
 CKEDITOR_UPLOAD_PATH=MEDIA_ROOT
 CKEDITOR_JQUERY_URL='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default': {'toolbar': 'Full'}
+}
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',

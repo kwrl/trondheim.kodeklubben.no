@@ -1,8 +1,11 @@
 from django.forms.widgets import ClearableFileInput
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
-from .models import TaskSubmission
+from ckeditor.widgets import CKEditorWidget
 from django.forms import ModelForm
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from .models import TaskSubmission, Task, Course
+from django import forms
 import os
 
 
@@ -45,3 +48,40 @@ class TaskSubmissionForm(ModelForm):
         sub.valid = self.instance.valid
         sub.status = TaskSubmission.NOT_EVALUATED
         sub.save()
+
+
+class TaskAdminForm(ModelForm):
+    desc = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Task
+
+
+class CourseAdminForm(ModelForm):
+    tasks = forms.ModelMultipleChoiceField(
+        queryset=Task.objects.all(),
+        required=False,
+        widget=FilteredSelectMultiple(
+            verbose_name=('Tasks'),
+            is_stacked=False
+        )
+    )
+    class Meta:
+        model = Course
+
+    def __init__(self, *args, **kwargs):
+        super(CourseAdminForm, self).__init__(*args, **kwargs)
+
+        if self.instance and self.instance.pk:
+            self.fields['tasks'].initial = self.instance.tasks.all()
+
+    def save(self, commit=True):
+        course = super(CourseAdminForm, self).save(commit=False)
+
+        if commit:
+            course.save()
+        if course.pk:
+            course.tasks= self.cleaned_data['tasks']
+            self.save_m2m()
+        return course
+
+

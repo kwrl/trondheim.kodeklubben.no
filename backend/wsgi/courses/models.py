@@ -5,12 +5,11 @@ from django.utils import timezone
 
 class Task(models.Model):
     title = models.CharField(max_length=100)
-    desc = models.CharField(max_length=500)
+    desc = models.TextField()
     points_reward = models.PositiveIntegerField()
 
     def __str__(self):
         return self.title
-
 
     def save(self, *args, **kwargs):
         super(Task, self).save()
@@ -37,7 +36,8 @@ class ExtraCourseManager(models.Manager):
 class Course(models.Model):
     name = models.CharField(max_length=80)
     desc = models.CharField(max_length=200)
-    registrations = models.ManyToManyField(User, through="Registration")
+    registrations = models.ManyToManyField(User,
+                                           through="Registration")
     tasks = models.ManyToManyField(Task)
 
     registration_start = models.DateField()
@@ -86,7 +86,7 @@ class ScoreProfile(models.Model):
     @classmethod
     def get_start_rank(cls):
         if Ranking.objects.all().exists():
-            rank = Ranking.objects.order_by('-required_score').first()
+            rank = Ranking.objects.order_by('required_score').first()
             return rank
         else:
             rank = Ranking(name="Apprentice", required_score=0)
