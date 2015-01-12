@@ -1,0 +1,33 @@
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="info">
+            <td>Godkjent</td>
+            <td>Innhold</td>
+            <td>Vurdert</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for submission in subs %}
+    {%if submission.valid %}
+        <tr class="success">
+            <td>Ja</td>
+            <td><a href="{{submission.content_file.url}}">{{submission.content_file.name}}</a></td>
+            <td>Ja</td>
+        </tr>
+    {% elif submission.status%}
+        <tr class="danger">
+            <td>Nei</td>
+            <td><a href="{{submission.content_file.url}}">{{submission.content_file.name}}</a></td>
+            <td>Ja</td>
+        </tr>
+    {% else %}
+        <tr class="warning">
+            <td>Nei</td>
+            <td><a href="{{submission.content_file.url}}">{{submission.content_file.name}}</a></td>
+            <td>Nei</td>
+        </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+
