@@ -8,7 +8,7 @@ from .models import Sponsor
 class FrontpageView(View):
     def get(self, request, *args, **kwargs):
         context = {}
-        courses = Course.objects.open_verbose()
+        courses = Course.objects.open_registration()
         sponsors = Sponsor.objects.all()
 
         if(request.user.is_authenticated()):

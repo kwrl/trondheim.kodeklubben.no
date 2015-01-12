@@ -57,8 +57,16 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 class TaskSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('task', 'submitted_by', 'valid')
-    list_filter = ('task', 'submitted_by', 'valid')
+    list_display = ('task',
+                    'submitted_by',
+                    'valid',
+                    'submitted_at',
+                    'content_file_link')
+
+    list_filter = ('task',
+                   'submitted_by',
+                   'valid',
+                   'submitted_at')
 
 
 class RankingAdmin(admin.ModelAdmin):

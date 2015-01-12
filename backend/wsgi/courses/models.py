@@ -24,14 +24,6 @@ class ExtraCourseManager(models.Manager):
         return all_courses.filter(registration_start__lt=timezone.now(),
                                   registration_end__gt=timezone.now())
 
-    def open_verbose(self):
-        courses = self.open_registration()
-        for course in courses:
-            course.taken = \
-                Registration.objects.filter(course=course,
-                                            role=0).count()
-        return courses
-
 
 class Course(models.Model):
     name = models.CharField(max_length=80)
@@ -136,7 +128,16 @@ class TaskSubmission(models.Model):
     valid = models.BooleanField()
     content_file = models.FileField(upload_to='submissions/')
     submitted_by = models.ForeignKey(User)
+    submitted_at = models.DateTimeField(auto_now_add=True, editable=False)
     status = models.PositiveIntegerField(choices=STATES, default=NOT_EVALUATED)
+
+    def content_file_link(self):
+        if self.content_file:
+            return '<a href="%s">%s</a>' % (self.content_file.url,
+                                            self.content_file.name)
+        return 'No attachment'
+
+    content_file_link.allow_tags = True
 
     def execute(self, input=""):
         pass

@@ -1,7 +1,8 @@
+{% load coursetags %}
 <div class="list-group-item course row">
     <h4 class="text-primary course-name">{{course.name}}</h4>
     <p class="course-desc" style="display:none">{{course.desc}}</p>
-    <p class="course-taken" style="display:none">{{course.taken}}</p>
+    <p class="course-taken" style="display:none">{{course|registered_kids}}</p>
     <p class="course-limit" style="display:none">{{course.registration_limit}}</p>
     <p class="course-id" style="display:none">{{course.id}}</p>
     <p class="course-url" style="display:none">{% url "course_register" %}</p>
