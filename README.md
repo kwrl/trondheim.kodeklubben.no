@@ -1,7 +1,7 @@
 kodeklubben
 ===========
 
-Simple homepage for [kodeklubben trondheim](http://kodeklubben.trondheim.no)
+Simple homepage for [kodeklubben trondheim](http://trondheim.kodeklubben.no)
 
 
 Development
