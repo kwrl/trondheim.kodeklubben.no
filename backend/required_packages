@@ -5,6 +5,7 @@ markdown
 django-filter
 django-grappelli
 pillow
+django-ckeditor
 django-class-based-auth-views
 django-registration
 django-tinymce
