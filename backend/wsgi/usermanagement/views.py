@@ -12,6 +12,15 @@ from class_based_auth_views.views import LoginView
 from .forms import UserCreateForm, UserEditForm, UserAuthenticationForm
 
 
+class RecoverPasswordView(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        pass
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        pass
+
 class EditUserView(View):
     form_class = UserEditForm
     template_name = 'usermanagement/user_edit_screen.html'

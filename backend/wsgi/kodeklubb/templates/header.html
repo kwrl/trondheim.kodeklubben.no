@@ -2,7 +2,7 @@
 <nav id="header" class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="" href="{% url "home" %}"><img src="{% static "frontpage/img/logo.png" %}"/></a> 
+            <a class="" href="{% url "home" %}"><img src="{% static "frontpage/img/logo.png" %}"/></a>
         </div>
         {% if user.is_authenticated %}
         <ul class="nav navbar-nav navbar-left">
@@ -23,6 +23,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url "register" %}">Registrer deg</a></li>
             <li><a href="{% url "login" %}">Logg inn</a></li>
+            <li><a href="{% url "password_reset" %}">Glemt passord?</a></li>
         </ul>
         {% endif %}
     </div>
