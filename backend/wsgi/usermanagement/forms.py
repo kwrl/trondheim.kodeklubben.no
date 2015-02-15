@@ -41,8 +41,3 @@ class UserEditForm(ModelForm):
     class Meta:
         model = User
         fields = ["first_name","last_name"]
-
-class ResetPasswordForm(ModelForm):
-    class Meta:
-        model = User
-        fields = [""]
