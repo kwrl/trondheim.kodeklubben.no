@@ -10,5 +10,5 @@ django-class-based-auth-views
 django-registration
 django-tinymce
 django-filebrowser
-django-bootstrap-form
+django-forms-bootstrap
 south

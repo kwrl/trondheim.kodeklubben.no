@@ -3,7 +3,6 @@ from .models import NewsItem
 from .forms import NewsItemForm
 
 class NewsItemAdmin(admin.ModelAdmin):
-    form = NewsItemForm
     fieldset = (
         (None, {
             'fields':('title', 'intro','body'),
@@ -20,5 +19,8 @@ class NewsItemAdmin(admin.ModelAdmin):
         return super(NewsItemAdmin, self).formfield_for_foreignkey(db_field,
                                                                    request,
                                                                    **kwargs)
+    class Media:
+        js = ['/static/grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js',
+        '/static/grappelli/tinymce_setup/tinymce_setup.js']
 
 admin.site.register(NewsItem, NewsItemAdmin)

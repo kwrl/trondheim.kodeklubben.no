@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
 
-class UserCreateForm(UserCreationForm):
+class RegistrationForm(UserCreationForm):
     email       = forms.EmailField(required=True)
     first_name  = forms.CharField(required=True)
     last_name   = forms.CharField(required=True)
 
     def __init__(self, request=None, *args, **kwargs):
-        super(UserCreateForm, self).__init__(*args, **kwargs)
+        super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = "Brukernavn"
         self.fields['password1'].label = "Passord"
         self.fields['password2'].label = "Gjenta passord"
@@ -25,15 +25,15 @@ class UserCreateForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2", "first_name","last_name")
 
     def save(self, commit=True):
-        user = super(UserCreateForm, self).save(commit=False)
+        user = super(RegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
         if commit:
             user.save()
         return user
 
-class UserAuthenticationForm(AuthenticationForm):
+class LoginForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):
-        super(UserAuthenticationForm, self).__init__(*args, **kwargs)
+        super(LoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = "Brukernavn"
         self.fields['password'].label = "Passord"
 

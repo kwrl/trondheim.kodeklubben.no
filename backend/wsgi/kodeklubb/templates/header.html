@@ -6,12 +6,6 @@
         </div>
         {% if user.is_authenticated %}
         <ul class="nav navbar-nav navbar-left">
-            {% if user.first_name and user.last_name %}
-            <li><a href="{% url "edit_user" %}">Velkommen til Kodeklubben Trondheim, <b>{{user.first_name}} "{{user.username}}" {{user.last_name}}</b>.</a></li>
-            {% else %}
-            <li><a href="{% url "edit_user" %}">Velkommen til Kodeklubben Trondheim, <b>{{user.username}}</b>.</a></li>
-            <li><a href="{% url "edit_user" %}" >Vi trenger navnet ditt, trykk her.</a></li>
-            {% endif %}
         </ul>
         {% endif %}
         {% if user.is_authenticated %}

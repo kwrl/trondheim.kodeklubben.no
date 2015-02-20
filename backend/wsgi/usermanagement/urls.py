@@ -1,21 +1,27 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic.edit import CreateView
-from django.contrib.auth.forms import UserCreationForm
+from .forms import RegistrationForm, LoginForm
+from class_based_auth_views.views import LoginView, LogoutView
 
 urlpatterns = patterns('',
     url(r'^register/$',
         CreateView.as_view(
             template_name='form_screen.html',
-            form_class=UserCreationForm,
+            form_class=RegistrationForm,
             success_url='/'
         ),
         name='register'),
     url(r'^login/$',
-        'django.contrib.auth.views.login',
-        {'template_name' : 'form_screen.html'},
+        LoginView.as_view(
+            template_name='form_screen.html',
+            form_class=LoginForm,
+            success_url='/',
+        ),
         name='login'),
     url(r'^logout/$',
-        'django.contrib.auth.views.logout',
+        LogoutView.as_view(
+            template_name='form_screen.html',
+        ),
         name='logout'),
     url(r'^password/reset/$',
         'django.contrib.auth.views.password_reset',

@@ -33,7 +33,6 @@ EMAIL_HOST_PASSWORD = 'test'
 EMAIL_USE_TLS = True
 
 INSTALLED_APPS = (
-    'ckeditor',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,11 +44,11 @@ INSTALLED_APPS = (
     'newsfeed',
     'courses',
     'filebrowser',
-    'bootstrapform',
     'registration',
     'frontpage',
     'usermanagement',
     'class_based_auth_views',
+    'django_forms_bootstrap',
     'south',
 )
 
@@ -77,12 +76,9 @@ PRIVATE_MEDIA_URL = os.path.join(BASE_DIR, 'private')
 STATIC_URL= '/static/'
 STATIC_ROOT = (os.path.join(BASE_DIR, "static"))
 ADMIN_MEDIA_ROOR=MEDIA_ROOT
-CKEDITOR_UPLOAD_PATH=MEDIA_ROOT
-CKEDITOR_JQUERY_URL='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
-CKEDITOR_CONFIGS = {
-    'default': {'toolbar': 'Full'}
-}
+TINYMCE_URL='/static/grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js'
+TINYMCE_SETUP_ULR='/static/grappelli/tinymce_setup/tinymce_setup.js'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',

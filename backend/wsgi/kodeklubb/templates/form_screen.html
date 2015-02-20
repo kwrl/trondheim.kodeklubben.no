@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 {% load bootstrap %}
+{% load bootstrap_tags %}
 
 {% block content %}
 {% include "header.html" %}
-
 <div class="container">
     <div class="row">
-        <div class="col-sm-4 col-md-4">
+        <div class="well bs-component col-sm-12 col-md-6 col-md-offset-3">
           <form class="form-horizontal" method="post" action="{{action}}">
+            <fieldset>
             {% csrf_token %}
-            {{ form | bootstrap }}
-            <button type="submit" class="btn btn-default">Ferdig</button>
+            {{ form | as_bootstrap_horizontal}}
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary col-md-12">Ferdig</button>
+            </div>
+            </fieldset>
           </form>
         </div>
     </div>

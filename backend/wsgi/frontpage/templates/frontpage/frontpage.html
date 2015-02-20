@@ -6,9 +6,6 @@
 {% include "header.html" %}
 {% endblock %}
 
-{% block footer %}
-{% include "footer.html" %}
-{% endblock %}
 {% block content%}
 <div class="container-fluid">
         <div class="row">
@@ -23,9 +20,9 @@
                         <h2 class="text-primary">Nyheter</h2>
                         <div class="list-group">
                                 {% for newsitem in newsitems %}
-                                <div class="list-group-item">
+                                <div class="well well-sm">
                                         <h4>{{newsitem.title}}</h4>
-                                        <p>{{newsitem.intro}}</p>	
+                                        <p>{{newsitem.intro}}</p>
                                         <p>{{newsitem.body|safe}}</p>
                                 </div>
                                 {% endfor %}
