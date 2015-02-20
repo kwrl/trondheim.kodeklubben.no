@@ -1,5 +1,5 @@
 {% load coursetags %}
-<div class="well well-sm course row">
+<div class="well well-sm course row col-md-10">
     <h4 class="text-primary course-name">{{course.name}}</h4>
     <p class="course-desc" style="display:none">{{course.desc}}</p>
     <p class="course-taken" style="display:none">{{course|registered_kids}}</p>
@@ -13,11 +13,12 @@
         {% if course.signed_up %}
         <button type="button" class="course-sign-off btn btn-warning">Meld meg av</button>
         {% else %}
-            <button type="button" class="col-md-4 col-sm-4 course-sign-up-master btn btn-default">Bli veileder</button>
-            <button type="button" class="col-md-4 col-sm-4 course-sign-up-reserve btn btn-primary">Bli reserverveileder</button>
-            <button type="button" class="col-md-4 col-sm-4 course-sign-up-kid btn btn-success">Bli kursdeltager</button>
+            <button type="button" class="col-md-4 col-sm-4 course-sign-up-master btn btn-default btn-sm">Bli veileder</button>
+            <button type="button" class="col-md-4 col-sm-4 course-sign-up-reserve btn btn-primary btn-sm">Bli reserverveileder</button>
+            <button type="button" class="col-md-4 col-sm-4 course-sign-up-kid btn btn-success btn-sm">Bli kursdeltager</button>
         {% endif %}
     {% else %}
         <p class="course-msg">Du må logge inn for å melde deg opp.</p>
     {% endif %}
 </div>
+<div class="col-md-1"></div>
