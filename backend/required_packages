@@ -3,7 +3,7 @@ django-cors-headers
 djangorestframework
 markdown
 django-filter
-django-grappelli
+django-grappelli==2.5.6
 pillow
 django-ckeditor
 django-class-based-auth-views
