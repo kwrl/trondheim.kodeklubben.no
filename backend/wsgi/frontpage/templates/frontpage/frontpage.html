@@ -8,13 +8,6 @@
 {% block content%}
 <div class="container-fluid">
         <div class="row">
-                <div class="col-md-2">
-                        {% for sponsor in sponsors %}
-                        <a href="{{sponsor.url}}">
-                                <img src="{{MEDIA_URL}}/{{sponsor.image.path}}"/>
-                        </a>
-                        {% endfor %}
-                </div>
                 <div class="col-md-4">
                         <h2 class="text-primary">Nyheter</h2>
                         <div class="list-group">
@@ -38,6 +31,13 @@
                                 {% endif %}
                                 {% endfor %}
                         </div>
+                </div>
+                <div class="col-md-2">
+                        {% for sponsor in sponsors %}
+                        <a href="{{sponsor.url}}">
+                                <img src="{{MEDIA_URL}}/{{sponsor.image.path}}"/>
+                        </a>
+                        {% endfor %}
                 </div>
         </div>
 </div>
