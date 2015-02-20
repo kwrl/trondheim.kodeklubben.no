@@ -1,5 +1,5 @@
 {% load coursetags %}
-<div class="well well-sm course row col-md-10">
+<div class="well well-sm course row col-md-12">
     <h4 class="text-primary course-name">{{course.name}}</h4>
     <p class="course-desc" style="display:none">{{course.desc}}</p>
     <p class="course-taken" style="display:none">{{course|registered_kids}}</p>
@@ -21,4 +21,3 @@
         <p class="course-msg">Du må logge inn for å melde deg opp.</p>
     {% endif %}
 </div>
-<div class="col-md-1"></div>

@@ -25,7 +25,7 @@
                         <div class="list-group col-md-6">
                                 {% for course in courses %}
                                 {% include "courses/single_course.html" with course=course %}
-                                {% if forloop.counter|divisibleby:5 %}
+                                {% if forloop.counter|divisibleby:5 and not forloop.last %}
                         </div>
                         <div class="list-group col-md-6">
                                 {% endif %}
