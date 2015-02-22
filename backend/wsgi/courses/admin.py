@@ -1,11 +1,18 @@
 from django.contrib import admin
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 from django.core import serializers
+from django.db import models
 from .forms import TaskAdminForm, CourseAdminForm
 from .models import \
     Course, Registration, Ranking, ScoreProfile, Task, TaskSubmission
 
+from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+
+
+def export_csv(modeladmin, request, queryset):
+    return StreamingHttpResponse(request, str(models.get_models(include_auto_created=True)))
 
 def get_course_lists(modeladmin, request, queryset):
     for course in queryset:
@@ -37,17 +44,68 @@ get_course_lists.short_description = "Get course lists"
 export_as_json.short_description = "Export registrations as JSON"
 grant_registrations.short_description = "Grant registrations"
 remove_grants.short_description = "Ungrant registrations"
+export_csv.short_description = "Export lol"
+
+class OpenRegistrationFilter(admin.SimpleListFilter):
+    title = _('Pending/open/closed')
+    parameter_name = 'state'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('open', _('Registrations for open courses ')),
+            ('pending', _('Registrations for pending courses')),
+            ('closed', _('Registrations for closed courses'))
+        )
+
+    def queryset(self, request, queryset):
+        courses = None
+        if self.value() == 'open':
+            courses = Course.objects.filter(registration_start__lt=timezone.now(),
+                                      registration_end__gt=timezone.now())
+        if self.value() == 'pending':
+            courses = Course.objects.filter(registration_start__gt=timezone.now())
+
+        if self.value() == 'closed':
+            courses = Course.objects.filter(registration_end__lt=timezone.now())
+
+        if courses == None:
+            return queryset
+
+        return queryset.filter(course__in=courses)
 
 
 class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('course', 'user', 'granted', 'role')
-    list_filter = ('granted', 'course', 'user', 'role')
-    actions = [export_as_json, grant_registrations, remove_grants]
+    list_filter = (OpenRegistrationFilter, 'granted', 'course', 'user', 'role')
+    actions = [export_as_json, grant_registrations, remove_grants, export_csv]
+
+class OpenCourseFilter(admin.SimpleListFilter):
+    title = _('Pending/open/closed')
+    parameter_name = 'state'
+    def lookups(self, request, model_admin):
+        return (
+            ('open', _('Courses currently open for registration')),
+            ('pending', _('Courses that have not been opened')),
+            ('closed', _('Courses that have been closed'))
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'open':
+            return queryset.filter(registration_start__lt=timezone.now(),
+                                      registration_end__gt=timezone.now())
+        if self.value() == 'pending':
+            return queryset.filter(registration_start__gt=timezone.now())
+
+        if self.value() == 'closed':
+            return queryset.filter(registration_end__lt=timezone.now())
+
+        return queryset
 
 
 class CourseAdmin(admin.ModelAdmin):
     form = CourseAdminForm
     list_display = ('name', 'desc')
+    list_filter = (OpenCourseFilter, )
     actions = [get_course_lists, export_as_json]
 
 
