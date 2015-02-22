@@ -14,7 +14,7 @@ class FrontpageView(View):
         if(request.user.is_authenticated()):
             for course in courses:
                 course.signed_up = \
-                    course.registrations.filter(pk=request.user.id).count()
+                    course.registrations.filter(pk=request.user.id).exists()
 
         context['newsitems'] = \
             NewsItem.objects.filter(hide=False).order_by('-time_stamp')[:5]
