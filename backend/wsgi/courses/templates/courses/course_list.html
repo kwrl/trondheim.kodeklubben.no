@@ -1,10 +1,15 @@
 {% for course in courses %}
-    Kurs: {{course.name}} <br/>
+    Course: {{course.name}} <br/>
     CodeMasters: <br />
     {% for registration in course.granted_masters%}
         {{registration.user.email}} <br />
     {% endfor %}
-    
+
+    Reserves: <br />
+    {% for registration in course.reserves%}
+        {{registration.user.email}} <br />
+    {% endfor %}
+
     Kids: <br />
     {% for registration in course.granted_kids%}
         {{registration.user.email}} <br />

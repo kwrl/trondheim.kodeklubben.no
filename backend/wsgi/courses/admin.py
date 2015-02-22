@@ -17,8 +17,9 @@ def export_csv(modeladmin, request, queryset):
 def get_course_lists(modeladmin, request, queryset):
     for course in queryset:
         granted = Registration.objects.filter(course=course, granted=True)
-        course.granted_masters = granted.filter(code_master=True)
-        course.granted_kids = granted.filter(code_master=False)
+        course.granted_masters = granted.filter(role=Registration.CODE_MASTER)
+        course.granted_reserves = granted.filter(role=Registration.RESERVE)
+        course.granted_kids = granted.filter(role=Registration.KID)
         return render(request,
                       'courses/course_list.html',
                       {'courses': queryset})
