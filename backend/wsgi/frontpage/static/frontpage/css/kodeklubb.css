@@ -13,11 +13,20 @@ body.kodeklubb
 
 #footer {
     position:fixed;
-    bottom:0px;
-    right:0px;
+    bottom:0;
+    right:0;
 }
 
 img {
     width:100%;
     height:auto;
+}
+
+.course, .course-name {
+    transition:all 0.2s;
+}
+
+.course.active {
+    cursor:pointer;
+    border-color:#aaa;
 }
