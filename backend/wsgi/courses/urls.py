@@ -4,13 +4,17 @@ from .views import \
     CourseRegistrationView, \
     ProfileView, \
     CourseListView, \
-    TaskSubmissionView
+    TaskSubmissionView, \
+    CourseListJSON
 
 urlpatterns = patterns('',
                        url(r'^$',
                            CourseListView.as_view(),
                            name="course_list"),
-                       url(r'^register/',
+                       url(r'^open_courses_json/',
+                           CourseListJSON.as_view(),
+                           name="open_courses_json"),
+                       url(r'^register/(?P<course_id>\d+)/$',
                            CourseRegistrationView.as_view(),
                            name="course_register"),
                        url(r'^profile/',

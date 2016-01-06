@@ -2,10 +2,22 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+from django.http import HttpResponse, JsonResponse
 from .models import \
     Course, Registration, Task, TaskSubmission, ScoreProfile
 from .forms import TaskSubmissionForm
+from django.core import serializers
 
+import simplejson as json
+
+class CourseListJSON(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(
+                serializers.serialize(
+                    'json', 
+                    Course.objects.open_registration()
+                )
+            )
 
 class CourseListView(View):
     template_name = 'courses/course_select.html'
@@ -80,34 +92,51 @@ class TaskSubmissionView(View):
 
 class CourseRegistrationView(View):
     @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        course_id = kwargs['course_id']
+        if not Registration.objects.filter(course_id=course_id, user=request.user).exists():
+            return HttpResponse(-1)
+
+        registration = Registration.objects.filter(
+                course_id=course_id, 
+                user=request.user).first()
+        return HttpResponse(registration.role)
+    
+
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        course_id = request.POST['course_id']
+        POST = json.loads(request.body)
+        course_id = kwargs['course_id']
+
+        if course_id==-1:
+            return HttpResponse("No course id received")
+             
         course = Course.objects.get(pk=course_id)
 
         if course:
             Registration.objects.filter(user=request.user,
                                         course=course).delete()
         else:
-            return
+            return HttpResponse("No course with that id found")
 
-        if request.POST['sign_up'] == u'master':
+        if POST['sign_up'] == u'master':
             Registration(user=request.user,
                          course=course,
                          granted=False,
                          code_master=True,
                          role=Registration.CODE_MASTER).save()
 
-        elif request.POST['sign_up'] == u'kid':
+        elif POST['sign_up'] == u'kid':
             Registration(user=request.user,
                          course=course,
                          granted=False,
                          code_master=False,
                          role=Registration.KID).save()
 
-        elif request.POST['sign_up'] == u'reserve':
+        elif POST['sign_up'] == u'reserve':
             Registration(user=request.user,
                          course=course,
                          granted=False,
                          code_master=False,
                          role=Registration.RESERVE).save()
-        return
+        return HttpResponse("Registration complete")

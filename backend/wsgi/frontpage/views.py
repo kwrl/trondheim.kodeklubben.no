@@ -22,3 +22,5 @@ class FrontpageView(View):
         context['header'] = "Kodeklubben Trondheim"
         context['sponsors'] = sponsors
         return render(request, 'frontpage/frontpage.html', context)
+
+

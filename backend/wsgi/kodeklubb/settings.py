@@ -21,7 +21,7 @@ SITE_ID = 1
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
-    BASE_DIR + '/kodeklubb/templates/'
+    BASE_DIR + '/kodeklubb/templates/',
 )
 
 ALLOWED_HOSTS = ['*']
@@ -49,7 +49,6 @@ INSTALLED_APPS = (
     'usermanagement',
     'class_based_auth_views',
     'django_forms_bootstrap',
-    'south',
 )
 
 MIDDLEWARE_CLASSES = (

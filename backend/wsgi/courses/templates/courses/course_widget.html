@@ -1,0 +1,43 @@
+{% load coursetags %}
+{% load staticfiles %}
+<script src="https://code.angularjs.org/1.4.8/angular.min.js"></script>
+{% verbatim %}
+<form class="alert form-horizontal course-widget" ng-app="coursesApp" ng-controller="CoursesController">
+    <div class="form-group">
+        <h4 for="selectCourse" class="col-sm-4 control-label">Velg kurs</h4>
+        <div class="col-sm-8">
+            <select name="selectCourse" class="form-control" ng-model="selectedCourse" ng-options="course.fields.name for course in courses">
+            </select>
+        </div>
+    </div>
+    <div ng-show="selectedCourse" class="form-group">
+        <div class="col-sm-12">
+            <h4>{{selectedCourse.fields.desc}}</h4>
+        </div>
+    </div>
+    {% endverbatim %}
+    {% if user.is_authenticated %}
+    {% verbatim %}
+    <div ng-show="selectedCourse" class="form-group">
+        <div class="col-sm-12">
+            <h4>Din rolle: {{userStateLabels[userState]}}</h4>
+        </div>
+    </div>
+    <div ng-show="selectedCourse" class="form-group">
+        <div class="col-sm-12">
+            <button ng-click="registrationRequest('kid')" class="btn btn-success col-sm-3">Delta!</button>
+            <button ng-click="registrationRequest('master')" class="btn btn-primary col-sm-3">Bli veileder!</button>
+            <button ng-click="registrationRequest('reserve')" class="btn btn-default col-sm-3">Bli reserve!</button>
+            <button ng-click="registrationRequest('deregister')" class="btn btn-default col-sm-3">Meld meg av!</button>
+        </div>
+    </div>
+    {% endverbatim %}
+    {% else %}
+    <div class="form-group">
+        <div class="col-sm-12">
+            <h4>Opprett bruker og logg inn for å melde deg opp i kurs.</h4>
+        </div>
+    </div>
+    {% endif %}
+</form>
+<script src="{% static 'courses/js/course_widget.js' %}"></script>
