@@ -3,6 +3,7 @@
 <script src="https://code.angularjs.org/1.4.8/angular.min.js"></script>
 {% verbatim %}
 <form class="alert form-horizontal course-widget" ng-app="coursesApp" ng-controller="CoursesController">
+	<legend>Meld deg opp i kurs</legend>
     <div class="form-group">
         <h4 for="selectCourse" class="col-sm-4 control-label">Velg kurs</h4>
         <div class="col-sm-8">
@@ -25,10 +26,12 @@
     </div>
     <div ng-show="selectedCourse" class="form-group">
         <div class="col-sm-12">
-            <button ng-click="registrationRequest('kid')" class="btn btn-success col-sm-3">Delta!</button>
-            <button ng-click="registrationRequest('master')" class="btn btn-primary col-sm-3">Bli veileder!</button>
-            <button ng-click="registrationRequest('reserve')" class="btn btn-default col-sm-3">Bli reserve!</button>
-            <button ng-click="registrationRequest('deregister')" class="btn btn-default col-sm-3">Meld meg av!</button>
+            <button ng-click="registrationRequest('kid')" class="btn btn-success col-sm-6">Delta!</button>
+            <button ng-click="registrationRequest('master')" class="btn btn-primary col-sm-6">Bli veileder!</button>
+	</div>
+	<div class="col-sm-12">
+            <button ng-click="registrationRequest('reserve')" class="btn btn-default col-sm-6">Bli reserve!</button>
+            <button ng-click="registrationRequest('deregister')" class="btn btn-danger col-sm-6">Meld meg av!</button>
         </div>
     </div>
     {% endverbatim %}

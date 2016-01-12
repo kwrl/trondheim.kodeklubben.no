@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from .models import \
     Course, Registration, Task, TaskSubmission, ScoreProfile
 from .forms import TaskSubmissionForm
