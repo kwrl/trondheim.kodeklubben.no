@@ -51,7 +51,10 @@ app.controller('CoursesController', function ($scope, $http, Course) {
 
         $http.post('/courses/register/'+course_id +'/', data)
         .then(function() {
-            $scope.selectedCourse.$update();
+            newobj = Course.get({id:course_id});
+            console.log(newobj);
+            Object.assign($scope.selectedCourse, newobj);
+            console.log($scope.selectedCourse);
             $scope.updateUserState($scope.selectedCourse.id);
         },
         function() {
