@@ -24,7 +24,6 @@ class ExtraCourseManager(models.Manager):
         return all_courses.filter(registration_start__lt=timezone.now(),
                                   registration_end__gt=timezone.now())
 
-
 class Course(models.Model):
     name = models.CharField(max_length=80)
     desc = models.CharField(max_length=200)

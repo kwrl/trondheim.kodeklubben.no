@@ -1,43 +1,24 @@
+from .models import Course, Registration
 from rest_framework import serializers
 
-from .models import Course, Registration
+class CourseSerializer(serializers.ModelSerializer):
+    kids_signed_up = serializers.SerializerMethodField()
+    reserves_signed_up = serializers.SerializerMethodField()
+    masters_signed_up = serializers.SerializerMethodField()
 
-class CourseHeaderSerializer(serializers.Serializer):
-    pk      = serializers.Field()
-    name    = serializers.CharField()
-    registration_limit  = serializers.IntegerField()
-    
-    def restore_object(self, attrs, instance=None):
-        if not instance:
-            return Course(**attrs)
+    def get_kids_signed_up(self, course):
+        return self.get_role_signed_up(course, Registration.KID)
 
-        instance.pk     = attrs.get('pk', instance.pk)
-        instance.name   = attrs.get('name', instance.name)
-        instance.registration_limit = attrs.get('registration_limit', instance.registration_limit)
+    def get_reserves_signed_up(self, course):
+        return self.get_role_signed_up(course, Registration.RESERVE)
 
-        return instance
+    def get_masters_signed_up(self, course):
+        return self.get_role_signed_up(course, Registration.CODE_MASTER)
+
+    def get_role_signed_up(self, course, role):
+        return Registration.objects.filter(course=course, role=role).count()
+
+    class Meta:
+        model = Course
 
 
-class CourseFullSerializer(serializers.Serializer):
-    pk      = serializers.Field()
-    name    = serializers.CharField()
-    desc    = serializers.CharField()
-
-    registration_start  = serializers.DateTimeField()
-    registration_end    = serializers.DateTimeField()
-
-    registration_limit  = serializers.IntegerField()
-    
-    def restore_object(self, attrs, instance=None):
-        if not instance:
-            return Course(**attrs)
-
-        instance.pk     = attrs.get('pk', instance.pk)
-        instance.name   = attrs.get('name', instance.name)
-        instance.desc   = attrs.get('desc', instance.desc)
-        
-        instance.registration_start = attrs.get('registration_start', instance.registration_start)
-        instance.registration_end   = attrs.get('registration_end', instance.registration_end)
-        instance.registration_limit = attrs.get('registration_limit', instance.registration_limit)
-
-        return instance

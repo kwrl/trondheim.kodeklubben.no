@@ -1,19 +1,20 @@
 {% load coursetags %}
 {% load staticfiles %}
 <script src="https://code.angularjs.org/1.4.8/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.4.8/angular-resource.min.js"></script>
 {% verbatim %}
 <form class="alert form-horizontal course-widget" ng-app="coursesApp" ng-controller="CoursesController">
 	<legend>Meld deg opp i kurs</legend>
     <div class="form-group">
         <h4 for="selectCourse" class="col-sm-4 control-label">Velg kurs</h4>
         <div class="col-sm-8">
-            <select name="selectCourse" class="form-control" ng-model="selectedCourse" ng-options="course.fields.name for course in courses">
+            <select name="selectCourse" class="form-control" ng-model="selectedCourse" ng-options="course.name for course in courses">
             </select>
         </div>
     </div>
     <div ng-show="selectedCourse" class="form-group">
         <div class="col-sm-12">
-            <h4>{{selectedCourse.fields.desc}}</h4>
+            <h4>{{selectedCourse.desc}}</h4>
         </div>
     </div>
     {% endverbatim %}
@@ -22,6 +23,24 @@
     <div ng-show="selectedCourse" class="form-group">
         <div class="col-sm-12">
             <h4>Din rolle: {{userStateLabels[userState]}}</h4>
+        </div>
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Deltagere</th>
+                        <th>Veiledere</th>
+                        <th>Reserver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{{selectedCourse.kids_signed_up}}</th>
+                        <th>{{selectedCourse.masters_signed_up}}</th>
+                        <th>{{selectedCourse.reserves_signed_up}}</th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div ng-show="selectedCourse" class="form-group">

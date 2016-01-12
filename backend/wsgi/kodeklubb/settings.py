@@ -32,6 +32,12 @@ EMAIL_HOST_USER = 'test@test.com'
 EMAIL_HOST_PASSWORD = 'test'
 EMAIL_USE_TLS = True
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES' : [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 INSTALLED_APPS = (
     'grappelli',
     'django.contrib.admin',
@@ -49,6 +55,7 @@ INSTALLED_APPS = (
     'usermanagement',
     'class_based_auth_views',
     'django_forms_bootstrap',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

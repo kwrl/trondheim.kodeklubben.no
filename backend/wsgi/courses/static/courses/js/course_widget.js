@@ -1,25 +1,31 @@
-var app = angular.module('coursesApp', []);
+var courseServices = angular.module('courseServices', ['ngResource']);
+
+courseServices.factory('Course', ['$resource',
+    function($resource) {
+        return $resource('rest/courses/:id', {}, {
+            query: {method:'GET', params:{courseId:'courses'}, isArray:true}
+        });
+    }
+]);
+
+var app = angular.module('coursesApp', ['courseServices']);
 
 app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
 
-app.controller('CoursesController', function ($scope, $http) {
-    $scope.courses = [];
+app.controller('CoursesController', function ($scope, $http, Course) {
+    console.log(Course.query());
+    $scope.courses = Course.query();
     $scope.userStateClass = "alert-danger";
-
-    $http.get('/courses/open_courses_json')
-    .then(function(res) { 
-        $scope.courses = res.data;
-    });
 
     $scope.$watch('selectedCourse', function(newValue, oldValue) {
         $scope.userState = "";
-        if(newValue==undefined || newValue.pk==undefined) {
+        if(newValue==undefined || newValue.id==undefined) {
             return;
         }
-        $scope.updateUserState(newValue.pk); 
+        $scope.updateUserState(newValue.id); 
     });
 
     $scope.updateUserState = function(course_id) {
@@ -40,10 +46,13 @@ app.controller('CoursesController', function ($scope, $http) {
     $scope.registrationRequest = function(type) {
         data = {} ;
         data['sign_up'] = type;
+        
+        course_id = $scope.selectedCourse.id;
 
-        $http.post('/courses/register/'+$scope.selectedCourse.pk+'/', data)
+        $http.post('/courses/register/'+course_id +'/', data)
         .then(function() {
-            $scope.updateUserState($scope.selectedCourse.pk);
+            $scope.selectedCourse.$update();
+            $scope.updateUserState($scope.selectedCourse.id);
         },
         function() {
         });
