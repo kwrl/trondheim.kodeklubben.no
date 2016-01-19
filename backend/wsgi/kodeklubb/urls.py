@@ -5,13 +5,15 @@ from django.contrib import admin
 from filebrowser.sites import site as browsersite
 from rest_framework import routers
 
-from courses.viewsets import OpenCourseViewSet
+from courses.viewsets import OpenCourseViewSet, RegistrationViewSet 
+from usermanagement.viewsets import UserViewSet
 
 admin.autodiscover()
 
-router = routers.DefaultRouter()
+router = routers.DefaultRouter(trailing_slash=True)
 router.register(r'courses', OpenCourseViewSet)
-
+router.register(r'registrations', RegistrationViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = patterns('',
     url(r'^$', include('frontpage.urls')),

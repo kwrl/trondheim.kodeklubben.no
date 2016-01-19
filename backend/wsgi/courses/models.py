@@ -52,9 +52,12 @@ class Registration(models.Model):
     )
     user = models.ForeignKey(User)
     course = models.ForeignKey(Course)
-    granted = models.BooleanField()
-    code_master = models.BooleanField()
+    granted = models.BooleanField(default=False)
+    code_master = models.BooleanField(default=False)
     role = models.PositiveIntegerField(choices=ROLES, default=KID)
+
+    class Meta:
+        unique_together=(('user','course'))
 
 
 class Ranking(models.Model):

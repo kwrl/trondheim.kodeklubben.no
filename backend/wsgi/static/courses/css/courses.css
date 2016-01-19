@@ -1,0 +1,29 @@
+img.rank-icon {
+    width: 100%;
+    height: auto;
+}
+
+.ng-hide {
+}
+
+.fader.ng-hide {
+    transition:0.5s linear all;
+    opacity:0;
+}
+
+.animate-show {
+    -webkit-transition:all linear 1s;
+    transition:all linear 1s;
+    opacity:1;
+}
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove {
+    display:block!important;
+}
+.animate-show.ng-hide {
+    opacity:0;
+}
+
+
+

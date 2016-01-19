@@ -1,65 +1,30 @@
 {% load coursetags %}
 {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'courses/css/courses.css' %}" />
+
 <script src="https://code.angularjs.org/1.4.8/angular.min.js"></script>
 <script src="https://code.angularjs.org/1.4.8/angular-resource.min.js"></script>
-{% verbatim %}
-<form class="alert form-horizontal course-widget" ng-app="coursesApp" ng-controller="CoursesController">
-	<legend>Meld deg opp i kurs</legend>
-    <div class="form-group">
-        <h4 for="selectCourse" class="col-sm-4 control-label">Velg kurs</h4>
-        <div class="col-sm-8">
-            <select name="selectCourse" class="form-control" ng-model="selectedCourse" ng-options="course.name for course in courses">
-            </select>
-        </div>
-    </div>
-    <div ng-show="selectedCourse" class="form-group">
-        <div class="col-sm-12">
-            <h4>{{selectedCourse.desc}}</h4>
-        </div>
-    </div>
-    {% endverbatim %}
-    {% if user.is_authenticated %}
-    {% verbatim %}
-    <div ng-show="selectedCourse" class="form-group">
-        <div class="col-sm-12">
-            <h4>Din rolle: {{userStateLabels[userState]}}</h4>
-        </div>
-        <div class="col-sm-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Deltagere</th>
-                        <th>Veiledere</th>
-                        <th>Reserver</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>{{selectedCourse.kids_signed_up}}</th>
-                        <th>{{selectedCourse.masters_signed_up}}</th>
-                        <th>{{selectedCourse.reserves_signed_up}}</th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div ng-show="selectedCourse" class="form-group">
-        <div class="col-sm-12">
-            <button ng-click="registrationRequest('kid')" class="btn btn-success col-sm-6">Delta!</button>
-            <button ng-click="registrationRequest('master')" class="btn btn-primary col-sm-6">Bli veileder!</button>
-	</div>
-	<div class="col-sm-12">
-            <button ng-click="registrationRequest('reserve')" class="btn btn-default col-sm-6">Bli reserve!</button>
-            <button ng-click="registrationRequest('deregister')" class="btn btn-danger col-sm-6">Meld meg av!</button>
-        </div>
-    </div>
-    {% endverbatim %}
-    {% else %}
-    <div class="form-group">
-        <div class="col-sm-12">
-            <h4>Opprett bruker og logg inn for å melde deg opp i kurs.</h4>
-        </div>
-    </div>
-    {% endif %}
-</form>
+<script src="https://code.angularjs.org/1.4.8/angular-animate.min.js"></script>
+
+<script src="{% static 'courses/js/services.js' %}"></script>
 <script src="{% static 'courses/js/course_widget.js' %}"></script>
+
+{% verbatim %}
+<div class="alert course-widget" 
+    ng-app="coursesApp" ng-controller="CoursesController">
+    <legend>Meld deg opp i kurs</legend>
+    <div class="row">
+        <select name="selectCourse" class="form-control" 
+            ng-model="selectedCourse" ng-options="course.name for course in courses">
+        </select>
+    </div>
+    <div class="row course-management-container">
+        <course-management></course-management>
+    </div>
+    <div class="row">
+        <registration-list ng-show="registrations.length>0" class="animate-show"></registration-list>
+    </div>
+    
+</div>
+
+{% endverbatim %}

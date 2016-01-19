@@ -1,0 +1,37 @@
+<div class="course-management">
+    <h4>{{selectedCourse.name}}</h4>
+    <hr>
+    <p>{{selectedCourse.desc}}</p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Veiledere</td>
+                <td>Reserveveiledere</td>
+                <td>Deltagere</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{selectedCourse.masters_signed_up}}</td>
+                <td>{{selectedCourse.reserves_signed_up}}</td>
+                <td>{{selectedCourse.kids_signed_up}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-show="isLoggedIn()">
+        <div class="btn-group">
+            <button class="btn btn-success"
+                ng-click="registrationRequest(0)">Delta!</button>
+            <button class="btn btn-primary"
+                ng-click="registrationRequest(1)">Bli veileder!</button>
+            <button class="btn btn-default"
+                ng-click="registrationRequest(2)">Bli reserve!</button>
+            <button class="btn btn-danger"
+                ng-click="registrationRequest(-1)">Meld meg av!</button>
+        </div>
+    </div>
+    <div ng-hide="isLoggedIn()">
+        <p>Opprett bruker og logg inn for å melde deg opp i kurs</p>
+    </div>
+</div>

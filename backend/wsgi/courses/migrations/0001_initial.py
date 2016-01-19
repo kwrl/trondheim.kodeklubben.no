@@ -1,98 +1,127 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+from django.conf import settings
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Course'
-        db.create_table(u'courses_course', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=80)),
-            ('desc', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('registration_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('registration_end', self.gf('django.db.models.fields.DateTimeField')()),
-            ('registration_limit', self.gf('django.db.models.fields.PositiveIntegerField')()),
-        ))
-        db.send_create_signal(u'courses', ['Course'])
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
 
-        # Adding model 'Registration'
-        db.create_table(u'courses_registration', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('course', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['courses.Course'])),
-            ('granted', self.gf('django.db.models.fields.BooleanField')()),
-            ('code_master', self.gf('django.db.models.fields.BooleanField')()),
-        ))
-        db.send_create_signal(u'courses', ['Registration'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Course'
-        db.delete_table(u'courses_course')
-
-        # Deleting model 'Registration'
-        db.delete_table(u'courses_registration')
-
-
-    models = {
-        u'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        u'auth.permission': {
-            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        u'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        u'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        u'courses.course': {
-            'Meta': {'object_name': 'Course'},
-            'desc': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'registration_end': ('django.db.models.fields.DateTimeField', [], {}),
-            'registration_limit': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'registration_start': ('django.db.models.fields.DateTimeField', [], {}),
-            'registrations': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.User']", 'through': u"orm['courses.Registration']", 'symmetrical': 'False'})
-        },
-        u'courses.registration': {
-            'Meta': {'object_name': 'Registration'},
-            'code_master': ('django.db.models.fields.BooleanField', [], {}),
-            'course': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['courses.Course']"}),
-            'granted': ('django.db.models.fields.BooleanField', [], {}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
-        }
-    }
-
-    complete_apps = ['courses']
+    operations = [
+        migrations.CreateModel(
+            name='CompilerProfile',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('compile_cmd', models.CharField(max_length=100)),
+                ('execute_cmd', models.CharField(max_length=100)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Course',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('name', models.CharField(max_length=80)),
+                ('desc', models.CharField(max_length=200)),
+                ('registration_start', models.DateField()),
+                ('registration_end', models.DateField()),
+                ('registration_limit', models.PositiveIntegerField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Ranking',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('name', models.CharField(max_length=30)),
+                ('required_score', models.PositiveIntegerField()),
+                ('icon', models.ImageField(upload_to='rank_icons')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Registration',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('granted', models.BooleanField(default=False)),
+                ('code_master', models.BooleanField(default=False)),
+                ('role', models.PositiveIntegerField(default=0, choices=[(0, 'Kursdeltager'), (1, 'Veileder'), (2, 'Reserveveileder')])),
+                ('course', models.ForeignKey(to='courses.Course')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ScoreProfile',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('score', models.PositiveIntegerField()),
+                ('current_rank', models.ForeignKey(to='courses.Ranking')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Task',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('title', models.CharField(max_length=100)),
+                ('desc', models.TextField()),
+                ('points_reward', models.PositiveIntegerField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TaskSubmission',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('valid', models.BooleanField()),
+                ('content_file', models.FileField(upload_to='submissions/')),
+                ('submitted_at', models.DateTimeField(auto_now_add=True)),
+                ('status', models.PositiveIntegerField(default=0, choices=[(0, 'Ikke vurdert'), (1, 'Venter'), (2, 'Vurderes'), (3, 'Vurdert')])),
+                ('submitted_by', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('task', models.ForeignKey(to='courses.Task')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TestCase',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('task', models.ForeignKey(to='courses.Task')),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='registrations',
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='courses.Registration'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='course',
+            name='tasks',
+            field=models.ManyToManyField(to='courses.Task'),
+            preserve_default=True,
+        ),
+    ]

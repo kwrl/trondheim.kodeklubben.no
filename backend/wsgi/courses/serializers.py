@@ -1,6 +1,10 @@
 from .models import Course, Registration
 from rest_framework import serializers
 
+class RegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Registration
+
 class CourseSerializer(serializers.ModelSerializer):
     kids_signed_up = serializers.SerializerMethodField()
     reserves_signed_up = serializers.SerializerMethodField()
