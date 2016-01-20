@@ -2,11 +2,13 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'courses/css/courses.css' %}" />
 
-<script src="https://code.angularjs.org/1.4.8/angular.min.js"></script>
-<script src="https://code.angularjs.org/1.4.8/angular-resource.min.js"></script>
-<script src="https://code.angularjs.org/1.4.8/angular-animate.min.js"></script>
+<script src="{% static 'courses/js/angular.min.js' %}"></script>
+<script src="{% static 'courses/js/angular-resource.min.js' %}"></script>
+<script src="{% static 'courses/js/angular-animate.min.js' %}"></script>
 
 <script src="{% static 'courses/js/services.js' %}"></script>
+<script src="{% static 'courses/js/controllers.js' %}"></script>
+<script src="{% static 'courses/js/directives.js' %}"></script>
 <script src="{% static 'courses/js/course_widget.js' %}"></script>
 
 {% verbatim %}

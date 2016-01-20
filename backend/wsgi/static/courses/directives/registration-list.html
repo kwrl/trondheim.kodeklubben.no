@@ -1,0 +1,7 @@
+<div class="registration-list">
+    <h4>Påmeldte kurs</h4>
+    <hr>
+    <ul class="list-group">
+        <p ng-repeat="course in courses | filter: registeredCourse" class="list-group-item">{{course.name}}</p>
+    </ul>
+</div>

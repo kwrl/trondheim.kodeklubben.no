@@ -6,3 +6,4 @@ class NewsItemForm(forms.ModelForm):
     body = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = NewsItem
+        exclude = ('',)

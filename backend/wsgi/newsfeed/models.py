@@ -3,8 +3,8 @@ from django.db import models
 
 
 class NewsItem(models.Model):
-    title = models.CharField(max_length=80)
-    hide = models.BooleanField()
+    title = models.TextField()
+    hide = models.BooleanField(default=False)
     body = models.TextField()
     author = models.ForeignKey(User)
     time_stamp = models.DateTimeField(auto_now_add=True)

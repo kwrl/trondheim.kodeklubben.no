@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'newsfeed',
     'courses',
     'filebrowser',
-    'registration',
     'frontpage',
     'usermanagement',
     'class_based_auth_views',

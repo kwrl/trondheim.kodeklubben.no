@@ -4,15 +4,16 @@
 <title>Kodeklubben Trondheim</title>
 <link rel="icon" type="image/png" href="{% static "frontpage/img/icon.png" %}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="{% static "frontpage/css/bootstrap_lumen_theme.css" %}" rel="stylesheet">
 <link href="{% static "frontpage/css/kodeklubb.css" %}" rel="stylesheet">
+
+<script src="{% static 'courses/js/angular.min.js' %}"></script>
+<script src="{% static 'courses/js/angular-resource.min.js' %}"></script>
+<script src="{% static 'courses/js/angular-animate.min.js' %}"></script>
 {% block links %}
 {% endblock %}
 </head>
 <body class="kodeklubb">
-<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 {% block header %}
 {% endblock %}
 {% block content %}

@@ -1,21 +1,6 @@
 from django import template
-from courses.models import TaskSubmission, Registration
+from courses.models import Registration
 register = template.Library()
-
-
-@register.filter(name='solved')
-def solved(task, user):
-    return TaskSubmission.objects.filter(submitted_by=user,
-                                         task=task,
-                                         valid=True).exists()
-
-
-@register.filter(name='granted_access')
-def granted_access(course, user):
-    return Registration.objects.filter(course=course,
-                                       user=user,
-                                       granted=True).exists()
-
 
 @register.filter(name='registered_kids')
 def registered_kids(course):
